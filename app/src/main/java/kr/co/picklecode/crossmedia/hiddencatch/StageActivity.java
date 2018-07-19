@@ -1,6 +1,7 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -8,7 +9,10 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 import bases.BaseActivity;
+import bases.Configs;
 import bases.imageTransform.RoundedTransform;
 import kr.co.picklecode.crossmedia.hiddencatch.adapter.StageGridAdapter;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
@@ -34,9 +38,11 @@ public class StageActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 StageBox stageBox = StageSynchronizer.getStageInstance().get(position);
                 if(stageBox.getOriginalPath() != null && !stageBox.getOriginalPath().trim().equals("")){
+                    File dir = new File(getFilesDir().toString() + Configs.DOWNLOAD_DIR, stageBox.makePath());
+                    Log.e("StageActivity", dir.exists() + "/// " + dir.toString() + " ///" + stageBox.toString());
                     Picasso
                             .get()
-                            .load(stageBox.getOriginalPath())
+                            .load(dir)
                             .placeholder(R.drawable.icon_hour_glass)
                             .into(preImg);
                 }

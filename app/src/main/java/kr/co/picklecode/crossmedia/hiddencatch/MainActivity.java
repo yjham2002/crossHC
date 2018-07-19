@@ -2,11 +2,15 @@ package kr.co.picklecode.crossmedia.hiddencatch;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
 import bases.BaseActivity;
+import bases.Configs;
 import bases.Constants;
 import bases.SimpleCallback;
 import bases.utils.ToastAndExit;
@@ -76,7 +80,9 @@ public class MainActivity extends BaseActivity {
         if(requestCode == Constants.REQUEST.REQUEST_DOWNLOAD){
             switch (resultCode){
                 case Constants.RESULT.RESULT_DOWNLOAD_SUCC:{
+                    Log.e("initRun", "download finished");
                     showToast("다운로드가 완료되었습니다.");
+
                     PreferenceUtil.setBoolean(Constants.PREFERENCE.GAME_IMG_DOWNLOADED, true);
                     attachListenerAndSetEnabled();
                     break;

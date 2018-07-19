@@ -1,7 +1,5 @@
 package bases;
 
-import android.os.Environment;
-
 /**
  * Created by HP on 2018-01-03.
  */
@@ -15,6 +13,6 @@ public class Configs {
     public static final String API_CHECK_UPT = BASE_URL + "/action_front.php?cmd=ApiList.checkUpdate&appId=" + APP_ID;
     public static final String API_RECOMMENDS = BASE_URL + "/action_front.php?cmd=ApiList.getRecommendList&appId=" + APP_ID;
 
-    public static final String DOWNLOAD_DIR = Environment.DIRECTORY_DOWNLOADS + "/crossmediaHC";
+    public static final String DOWNLOAD_DIR = "/crossmediaHC";
 
 }

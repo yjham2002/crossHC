@@ -1,5 +1,7 @@
 package kr.co.picklecode.crossmedia.hiddencatch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 /**
@@ -12,6 +14,12 @@ public class StageBox extends DBox{
     private String originalPath;
     private int order;
     private List<QuestionBox> questions;
+
+    @JsonIgnore
+    public String makePath(){
+        String path = "gms_" + this.getId() + ".jpg";
+        return path;
+    }
 
     private int count = 0;
 

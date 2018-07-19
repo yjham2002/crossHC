@@ -29,6 +29,7 @@ public class DownloadActivity extends BaseActivity {
     private List<Long> downloadQueueList;
     private int failureCount = 0;
     private int totalCount = 0;
+    private int simpleCount = 0;
     private int completeCount = 0;
 
     private BroadcastReceiver onComplete = new BroadcastReceiver() {
@@ -38,43 +39,56 @@ public class DownloadActivity extends BaseActivity {
 
             downloadQueueList.remove(referenceId);
 
+            simpleCount++;
+
             if(isSuccess) completeCount++;
             else failureCount++;
 
             showToast(completeCount + " / " + totalCount);
 
-            if (downloadQueueList.isEmpty()) { // On All Downloads are Completed entirely
+            if (simpleCount == totalCount) { // On All Downloads are Completed entirely
                 onDownloadFinishAnyway();
             }
         }
     };
 
     private void startDownload(List<StageBox> stageBoxList){
-        final File sdCardExtra = Environment.getExternalStorageDirectory();
-        final String absStringUri = sdCardExtra.getAbsolutePath() + "/" + Configs.DOWNLOAD_DIR;
-
-        final File absDir = new File(absStringUri);
-        final File dir = new File(Configs.DOWNLOAD_DIR);
+        /**
+         * stageActivity load issue
+         * nomedia issue
+         */
 
         this.downloadQueueList.clear();
         this.totalCount = 0;
         this.failureCount = 0;
         this.completeCount = 0;
+        this.simpleCount = 0;
 
+        final File absDir = new File(getFilesDir().getAbsolutePath() + Configs.DOWNLOAD_DIR);
+        final File absDirNomedia = new File(getFilesDir().getAbsolutePath() + Configs.DOWNLOAD_DIR + "/.nomedia");
         clearDirectory(absDir);
 
-        File nomediaFile = new File(absStringUri + "/.nomedia");
-        if (!nomediaFile.exists()) {
-            nomediaFile.mkdir();
-        }
+        Log.e("initT", "A : " + absDir.exists());
+        Log.e("initT", "N : " + absDirNomedia.exists());
 
-        dir.mkdir();
+        absDir.mkdirs();
+        absDirNomedia.mkdirs();
+
+        Log.e("initT", "AA : " + absDir.exists());
+        Log.e("initT", "NA : " + absDirNomedia.exists());
+
+        for(StageBox stage : stageBoxList) {
+            totalCount++;
+            for(QuestionBox questionBox : stage.getQuestions()){
+                totalCount++;
+            }
+        }
 
         for(StageBox stage : stageBoxList) {
             final String displayText = getResources().getString(R.string.app_name) + " Stage Data [" + stage.getId() + "].";
-            requestDownload(stage.getOriginalPath(), displayText, stage.getOriginalPath());
+            requestDownload(absDir, stage.getOriginalPath(), displayText, stage.makePath());
             for(QuestionBox questionBox : stage.getQuestions()){
-                requestDownload(questionBox.getImgPath(), displayText + " / Q[" + questionBox.getId() + "]", questionBox.getImgPath());
+                requestDownload(absDir, questionBox.getImgPath(), displayText + " / Q[" + questionBox.getId() + "]", questionBox.makePath());
             }
         }
     }
@@ -109,7 +123,7 @@ public class DownloadActivity extends BaseActivity {
         fileOrDirectory.delete();
     }
 
-    private void requestDownload(String url, String displayText, String fileName){
+    private void requestDownload(File dir, String url, String displayText, String fileName){
         Uri downloadUri = Uri.parse(url);
         DownloadManager.Request request = new DownloadManager.Request(downloadUri);
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
@@ -117,11 +131,10 @@ public class DownloadActivity extends BaseActivity {
         request.setTitle(displayText);
         request.setDescription(displayText);
         request.setVisibleInDownloadsUi(false);
-        request.setDestinationInExternalPublicDir(Configs.DOWNLOAD_DIR, "test_" + new Random().nextInt(1500) + ".png");
+        request.setDestinationInExternalPublicDir(dir.getAbsolutePath(), fileName);
 
         Long refId = downloadManager.enqueue(request);
 
-        totalCount++;
         this.downloadQueueList.add(refId);
 //        try {
 //        }catch (IllegalArgumentException e){
