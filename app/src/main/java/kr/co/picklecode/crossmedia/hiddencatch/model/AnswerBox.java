@@ -41,4 +41,14 @@ public class AnswerBox extends DBox {
     public void setThreshold(double threshold) {
         this.threshold = threshold;
     }
+
+    @Override
+    public String toString() {
+        return "AnswerBox{" +
+                "questionId=" + questionId +
+                ", coordX=" + coordX +
+                ", coordY=" + coordY +
+                ", threshold=" + threshold +
+                '}';
+    }
 }

@@ -19,4 +19,11 @@
     <dimen name="right_side_btn_pad">40dp</dimen>
     <dimen name="left_side_pad">70dp</dimen>
 
+    <dimen name="nav_height">50dp</dimen>
+    <dimen name="nav_title_size">18dp</dimen>
+    <dimen name="nav_icon_size">35dp</dimen>
+    <dimen name="nav_side_margin">10dp</dimen>
+
+    <dimen name="list_side_margin">7dp</dimen>
+
 </resources>

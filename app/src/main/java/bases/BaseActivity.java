@@ -1,5 +1,6 @@
 package bases;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -51,27 +53,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     public static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE= 5469;
 
-    protected boolean checkDownloadCompleteById(DownloadManager downloadManager, long downloadID) {
-        DownloadManager.Query query = new DownloadManager.Query();
-        query.setFilterById(downloadID);
-
-        Cursor downloadCursor = downloadManager.query(query);
-        if (downloadCursor != null) {
-            downloadCursor.moveToFirst();
-            int statusKey = downloadCursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
-            int reasonKey = downloadCursor.getColumnIndex(DownloadManager.COLUMN_REASON);
-
-            int status = downloadCursor.getInt(statusKey);
-            int reason = downloadCursor.getInt(reasonKey);
-            if (status == DownloadManager.STATUS_SUCCESSFUL || reason == DownloadManager.ERROR_FILE_ALREADY_EXISTS)
-                return true;
-        }
-        return false;
-    }
-
-    protected void clearDirectory(File fileOrDirectory){
-        if (fileOrDirectory.isDirectory()) for (File child : fileOrDirectory.listFiles()) clearDirectory(child);
-        fileOrDirectory.delete();
+    protected void finishActivityForResult(int resultCode, Intent intent){
+        setResult(resultCode, intent);
+        finish();
     }
 
     protected boolean canDrawOverlaysTest() {
@@ -84,6 +68,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             }
         }
         return true;
+    }
+
+    protected void startActivity(Class toGo){
+        final Intent intent = new Intent(this, toGo);
+        startActivity(intent);
+    }
+
+    protected void finishAndStartActivity(Class toGo){
+        final Intent intent = new Intent(this, toGo);
+        startActivity(intent);
+        ActivityCompat.finishAffinity(this);
+        finish();
     }
 
     protected boolean onPermissionActivityResult(int requestCode){

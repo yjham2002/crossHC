@@ -7,9 +7,23 @@ package bases;
 public class Constants {
 
     public interface PREFERENCE{
+        String GAME_STAGE_OBJECT = "kr.co.picklecode.crossmedia.hiddencatch.STAGE_OBJECT";
+        String GAME_UPDATE_CHECK = "kr.co.picklecode.crossmedia.hiddencatch.UPDATE_CHECK";
+        String GAME_RECENT_VER = "kr.co.picklecode.crossmedia.hiddencatch.GAME_RECENT_VER";
+        String GAME_IMG_DOWNLOADED = "kr.co.picklecode.crossmedia.hiddencatch.GAME_IMG_DOWNLOADED";
+
         String IS_ALARM_SET = "kr.co.picklecode.crossmedia.hiddencatch.isAlarmSet";
         String ALARM_TIME = "kr.co.picklecode.crossmedia.hiddencatch.alarmTime";
         String ALARM_TIME_FOR_ADAPTER = "kr.co.picklecode.crossmedia.hiddencatch.alarmTime.adapter";
+    }
+
+    public interface REQUEST{
+        int REQUEST_DOWNLOAD = 1022;
+    }
+
+    public interface RESULT{
+        int RESULT_DOWNLOAD_SUCC = 1021;
+        int RESULT_DOWNLOAD_FAIL = 1020;
     }
 
     public interface DATABASE{

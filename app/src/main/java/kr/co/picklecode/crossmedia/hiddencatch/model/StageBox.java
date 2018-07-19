@@ -62,4 +62,16 @@ public class StageBox extends DBox{
     public void setQuestions(List<QuestionBox> questions) {
         this.questions = questions;
     }
+
+    @Override
+    public String toString() {
+        return "StageBox{" +
+                "appId=" + appId +
+                ", stageDesc='" + stageDesc + '\'' +
+                ", originalPath='" + originalPath + '\'' +
+                ", order=" + order +
+                ", questions=" + questions +
+                ", count=" + count +
+                '}';
+    }
 }

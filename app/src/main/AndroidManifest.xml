@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemeSolid">
         <activity
             android:name=".IntroActivity"
             android:screenOrientation="portrait">
@@ -49,8 +49,11 @@
         <activity
             android:name=".ExitActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DownloadActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DownloadActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".StageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

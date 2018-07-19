@@ -28,7 +28,7 @@
                 android:scaleType="centerInside" />
             <TextView
                 android:id="@+id/titleTop"
-                android:text="추천 어플"
+                android:text="0 / 0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/nav_title_size"
                 android:layout_gravity="center"
@@ -37,13 +37,47 @@
                 android:layout_height="wrap_content" />
         </FrameLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <GridView
+            android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/topMenu"
+            android:layout_above="@+id/bottomWrapper"
+            android:horizontalSpacing="8dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="8dp" />
+
+        <LinearLayout
+            android:id="@+id/bottomWrapper"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
-            />
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+                <ImageView
+                    android:src="@drawable/icon_hour_glass"
+                    android:id="@+id/preImg"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <View
+                    android:background="@color/transparent_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+            <TextView
+                android:id="@+id/adView"
+                android:gravity="center"
+                android:background="@color/transparent_white"
+                android:text="광고 영역"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </LinearLayout>
 
     </RelativeLayout>
     <ProgressBar

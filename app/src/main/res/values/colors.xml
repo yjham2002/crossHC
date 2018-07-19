@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F0594A</color>
-    <color name="colorPrimaryDark">#F0594A</color>
+    <color name="colorPrimary">#313131</color>
+    <color name="colorPrimaryDark">#313131</color>
     <color name="colorPrimaryDark2">#111111</color>
     <color name="colorPrimaryPlayer">#0EAD94</color>
     <color name="colorPrimaryDarkPlayer">#0EAD94</color>
@@ -13,6 +13,9 @@
     <color name="orange_exit">#F16B5E</color>
     <color name="orange_exit_dark">#94423a</color>
     <color name="windowBackground">#FFFFFF</color>
+    <color name="thisgrayLight">#dadada</color>
+    <color name="thisgray">#555555</color>
+    <color name="thisgrayDiv">#3d3d3d</color>
     <color name="player_gauge">#ECECEC</color>
     <color name="whiteTranparent">#55FFFFFF</color>
     <color name="transparent">#00000000</color>
@@ -43,6 +46,7 @@
     <color name="iron">#EEEEEE</color>
     <color name="transparent_white">#55FFFFFF</color>
     <color name="transparent_gray">#55000000</color>
+    <color name="image_shader">#81000000</color>
     <color name="transparent_window">#AB000000</color>
     <color name="dayBackground">#05000000</color>
     <color name="facebook">#3b5998</color>

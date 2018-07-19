@@ -44,21 +44,32 @@ public class SimpleCall {
         void handle(JSONObject jsonObject);
     }
 
+    public static void getHttpJson(String url, final CallBack callBack){
+        getHttpJson(url, null, callBack);
+    }
+
     public static void getHttpJson(String url, Map<String, Object> queryParam, final CallBack callBack){
         final StringBuffer stringBuffer = new StringBuffer();
-        final Set<String> keySet = queryParam.keySet();
-        for(String key : keySet) {
-            stringBuffer.append(key + "=" + queryParam.get(key) + "&");
-        }
-        final String newUrl = url + "?" + stringBuffer;
 
-        Log.e("RequestURL", newUrl);
+        if(queryParam != null) {
+            final Set<String> keySet = queryParam.keySet();
+            for (String key : keySet) {
+                stringBuffer.append(key + "=" + queryParam.get(key).toString().trim() + "&");
+            }
+        }
+        final String questionMark = (queryParam == null || url.contains("?")) ? "" : "?";
+        final String newUrl = url + questionMark + stringBuffer.toString();
+
+        Log.e("SimpleCall", "RequestURL : " + newUrl);
 
         getHttp(newUrl, new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String jsonString = msg.getData().getString("jsonString");
+
+                Log.e("SimpleCall", "Response : " + jsonString);
+
                 try {
                     JSONObject json_obj = new JSONObject(jsonString);
                     callBack.handle(json_obj);

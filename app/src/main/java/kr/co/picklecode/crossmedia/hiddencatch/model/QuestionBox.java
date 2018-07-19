@@ -45,4 +45,14 @@ public class QuestionBox extends DBox {
     public void setAnswers(List<AnswerBox> answers) {
         this.answers = answers;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionBox{" +
+                "stageId=" + stageId +
+                ", imgPath='" + imgPath + '\'' +
+                ", order=" + order +
+                ", answers=" + answers +
+                '}';
+    }
 }
