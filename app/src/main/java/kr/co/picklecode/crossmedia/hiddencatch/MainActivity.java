@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity {
     private void checkUpdateAuto(){
 
         final boolean isAvailable = StageSynchronizer.isLocalDataAvailable();
+        final boolean isDownloadDone = PreferenceUtil.getBoolean(Constants.PREFERENCE.GAME_IMG_DOWNLOADED, false);
 
         StageSynchronizer.onUpdateCheck(new SimpleCallback() {
             @Override
@@ -148,9 +149,9 @@ public class MainActivity extends BaseActivity {
         }, new SimpleCallback() { // on Failure
             @Override
             public void callback() {
-                if(!isAvailable){
+                if(!isAvailable || !isDownloadDone){
                     Log.e("initLoad", "on Failure");
-                    new ToastAndExit(MainActivity.this, "다시 시도하여 주시기 바랍니다. (2)").run();
+                    new ToastAndExit(MainActivity.this, "게임 데이터를 불러올 수 없습니다. (2)").run();
                 }else{ // Proceed anyway
                     Log.e("initRun", "anyway");
                     canProceed();

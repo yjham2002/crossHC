@@ -36,6 +36,8 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import bases.SimpleCallback;
+
 public class SimpleCall {
     private static String webUrl = "";
     private static String jsoupTemp = "";
@@ -48,7 +50,7 @@ public class SimpleCall {
         getHttpJson(url, null, callBack);
     }
 
-    public static void getHttpJson(String url, Map<String, Object> queryParam, final CallBack callBack){
+    public static void getHttpJson(String url, Map<String, Object> queryParam, final CallBack callBack, final SimpleCallback onEmpty){
         final StringBuffer stringBuffer = new StringBuffer();
 
         if(queryParam != null) {
@@ -71,13 +73,23 @@ public class SimpleCall {
                 Log.e("SimpleCall", "Response : " + jsonString);
 
                 try {
+                    Log.e("SimpleCall", "Generating Json Object.");
+                    if(jsonString == null || jsonString.trim().equals("")) {
+                        Log.e("SimpleCall", "jsonString is empty.");
+                        if(onEmpty != null) onEmpty.callback();
+                    }
                     JSONObject json_obj = new JSONObject(jsonString);
+
                     callBack.handle(json_obj);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    public static void getHttpJson(String url, Map<String, Object> queryParam, final CallBack callBack){
+        getHttpJson(url, queryParam, callBack, null);
     }
 
     public static void getHttp(String url, final Handler mHandler) {

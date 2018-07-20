@@ -69,12 +69,12 @@ public class StageSynchronizer {
     }
 
     public static void onUpdateCheck(final SimpleCallback onUpdateNeeded, final SimpleCallback notOnUpdateNeeded, final SimpleCallback onFailure){
-        SimpleCall.getHttpJson(Configs.API_CHECK_UPT, new SimpleCall.CallBack() {
+        SimpleCall.getHttpJson(Configs.API_CHECK_UPT, null, new SimpleCall.CallBack() {
             @Override
             public void handle(JSONObject jsonObject) {
-                try{
+                try {
                     final int returnCode = jsonObject.getInt("returnCode");
-                    if(returnCode != 1 && onFailure != null) {
+                    if (returnCode != 1 && onFailure != null) {
                         onFailure.callback();
                         return;
                     }
@@ -88,21 +88,26 @@ public class StageSynchronizer {
                     final int version = PreferenceUtil.getInt(Constants.PREFERENCE.GAME_UPDATE_CHECK, -1);
 
                     Log.e("initRun",
-                            "Current Version : "+PreferenceUtil.getInt(Constants.PREFERENCE.GAME_UPDATE_CHECK, -1) + " / " +
-                                    "Recent Version : "+PreferenceUtil.getInt(Constants.PREFERENCE.GAME_RECENT_VER, -1) + " / " +
-                                    "Image Downloaded : "+PreferenceUtil.getBoolean(Constants.PREFERENCE.GAME_IMG_DOWNLOADED, false)
+                            "Current Version : " + PreferenceUtil.getInt(Constants.PREFERENCE.GAME_UPDATE_CHECK, -1) + " / " +
+                                    "Recent Version : " + PreferenceUtil.getInt(Constants.PREFERENCE.GAME_RECENT_VER, -1) + " / " +
+                                    "Image Downloaded : " + PreferenceUtil.getBoolean(Constants.PREFERENCE.GAME_IMG_DOWNLOADED, false)
                     );
 
-                    if(appBox.getVersion() > version){
+                    if (appBox.getVersion() > version) {
                         onUpdateNeeded.callback();
-                    }else{
+                    } else {
                         notOnUpdateNeeded.callback();
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    if(onFailure != null) onFailure.callback();
+                    if (onFailure != null) onFailure.callback();
                 }
+            }
+        }, new SimpleCallback() {
+            @Override
+            public void callback() {
+                if (onFailure != null) onFailure.callback();
             }
         });
     }
