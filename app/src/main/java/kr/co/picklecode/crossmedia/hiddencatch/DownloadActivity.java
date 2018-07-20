@@ -64,18 +64,12 @@ public class DownloadActivity extends BaseActivity {
         this.completeCount = 0;
         this.simpleCount = 0;
 
-        final File absDir = new File(getFilesDir().getAbsolutePath() + Configs.DOWNLOAD_DIR);
-        final File absDirNomedia = new File(getFilesDir().getAbsolutePath() + Configs.DOWNLOAD_DIR + "/.nomedia");
+        final File absDir = new File(Environment.getExternalStorageDirectory() + File.separator + Configs.DOWNLOAD_DIR);
+        final File absDirNomedia = new File(absDir.getPath() + "/.nomedia");
         clearDirectory(absDir);
-
-        Log.e("initT", "A : " + absDir.exists());
-        Log.e("initT", "N : " + absDirNomedia.exists());
 
         absDir.mkdirs();
         absDirNomedia.mkdirs();
-
-        Log.e("initT", "AA : " + absDir.exists());
-        Log.e("initT", "NA : " + absDirNomedia.exists());
 
         for(StageBox stage : stageBoxList) {
             totalCount++;
@@ -131,7 +125,11 @@ public class DownloadActivity extends BaseActivity {
         request.setTitle(displayText);
         request.setDescription(displayText);
         request.setVisibleInDownloadsUi(false);
-        request.setDestinationInExternalPublicDir(dir.getAbsolutePath(), fileName);
+        Uri uri = Uri.fromFile(new File(dir, fileName));
+        Log.e("dirT", uri.toString());
+        request.setDestinationUri(uri);
+//        request.setDestinationInExternalPublicDir(dir.getAbsolutePath(), fileName);
+
 
         Long refId = downloadManager.enqueue(request);
 

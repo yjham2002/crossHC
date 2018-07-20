@@ -1,13 +1,18 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.BaseColumns;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+
+import java.io.File;
 
 import bases.BaseActivity;
 import bases.Configs;

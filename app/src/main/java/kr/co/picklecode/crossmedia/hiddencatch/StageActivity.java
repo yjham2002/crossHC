@@ -1,6 +1,7 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,7 +39,7 @@ public class StageActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 StageBox stageBox = StageSynchronizer.getStageInstance().get(position);
                 if(stageBox.getOriginalPath() != null && !stageBox.getOriginalPath().trim().equals("")){
-                    File dir = new File(getFilesDir().toString() + Configs.DOWNLOAD_DIR, stageBox.makePath());
+                    final File dir = new File(Environment.getExternalStorageDirectory() + File.separator + Configs.DOWNLOAD_DIR + File.separator + stageBox.makePath());
                     Log.e("StageActivity", dir.exists() + "/// " + dir.toString() + " ///" + stageBox.toString());
                     Picasso
                             .get()
