@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
                 break;
             }
             case R.id.btn_reco:{
-                startActivity(RecommendActivity.class);
+                startActivityWithTransition(RecommendActivity.class, R.anim.alpha_in, R.anim.alpha_out);
                 break;
             }
             case R.id.btn_bgm:{

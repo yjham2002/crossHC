@@ -27,6 +27,8 @@ import utils.PreferenceUtil;
 
 public class StageUtil {
 
+    private static final int MAX_HINT_COUNT = 99;
+
     private static final String KEY_STAGE = "KEY_INTERNAL_STAGE_INTENT";
 
     public static void injectStage(Intent intent, StageBox stageBox){
@@ -55,12 +57,22 @@ public class StageUtil {
         return null;
     }
 
-    public static void sendAndFinish(Activity activity, StageBox stageBox, Class toGo){
+    public static void sendAndFinishWithTransition(Activity activity, StageBox stageBox, Class toGo, int enterAnim, int exitAnim){
+        sendAndFinish(activity, stageBox, toGo);
+        activity.overridePendingTransition(enterAnim, exitAnim);
+    }
+
+    public static void sendAndFinish(Activity activity, StageBox stageBox, Class toGo, boolean isChallenge){
         final Intent intent = new Intent(activity, toGo);
         injectStage(intent, stageBox);
+        intent.putExtra(Constants.INTENT_KEY.GAME_KEY, isChallenge);
         activity.startActivity(intent);
         ActivityCompat.finishAffinity(activity);
         activity.finish();
+    }
+
+    public static void sendAndFinish(Activity activity, StageBox stageBox, Class toGo){
+        sendAndFinish(activity, stageBox, toGo, false);
     }
 
     /**
@@ -99,6 +111,25 @@ public class StageUtil {
 
     public static void setEffect(boolean turnOn){
         PreferenceUtil.setBoolean(Constants.PREFERENCE.GAME_EFFECT, turnOn);
+    }
+
+    public static int getPoint(){
+        return PreferenceUtil.getInt(Constants.PREFERENCE.GAME_HINT, 0);
+    }
+
+    public static void setPoint(int amount){
+        PreferenceUtil.setInt(Constants.PREFERENCE.GAME_HINT, 0);
+    }
+
+    /**
+     * Pluses the parameter to point amount
+     * @return returns false when the amount of point cannot be changed
+     */
+    public static boolean changePoint(int amount){
+        final int toGo = getPoint() + amount;
+        if(toGo > MAX_HINT_COUNT || toGo < 0) return false;
+        setPoint(toGo);
+        return true;
     }
 
 }

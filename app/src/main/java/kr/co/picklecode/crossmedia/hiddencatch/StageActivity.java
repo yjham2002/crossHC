@@ -62,13 +62,13 @@ public class StageActivity extends BaseActivity {
     @Override
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.btn_back:{
+            case R.id.left_back:{
                 finishAndStartActivity(MainActivity.class);
                 break;
             }
             case R.id.startBtn:{
                 if(selectedStage != null){
-                    StageUtil.sendAndFinish(this, selectedStage, PregameActivity.class);
+                    StageUtil.sendAndFinish(this, selectedStage, PregameActivity.class, false);
                 }else{
                     showToast("스테이지를 선택하세요.");
                 }

@@ -63,6 +63,7 @@ public class RecommendActivity extends BaseActivity {
         switch (view.getId()){
             case R.id.left_back:{
                 finish();
+                overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
                 break;
             }
             default: break;
@@ -78,4 +79,11 @@ public class RecommendActivity extends BaseActivity {
 
         loadData();
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+    }
+
 }

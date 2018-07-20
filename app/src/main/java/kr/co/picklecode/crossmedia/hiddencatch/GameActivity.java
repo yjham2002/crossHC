@@ -65,6 +65,10 @@ public class GameActivity extends BaseActivity {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.hintBack : {
+                final int point = StageUtil.getPoint();
+                if(point == 0){
+                    startActivityWithTransition(RewardActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+                }
                 break;
             }
             case R.id.pause : {

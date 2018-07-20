@@ -6,6 +6,10 @@ package bases;
 
 public class Constants {
 
+    public interface INTENT_KEY{
+        String GAME_KEY = "isChallenge";
+    }
+
     public interface PREFERENCE{
         String GAME_STAGE_OBJECT = "kr.co.picklecode.crossmedia.hiddencatch.STAGE_OBJECT";
         String GAME_UPDATE_CHECK = "kr.co.picklecode.crossmedia.hiddencatch.UPDATE_CHECK";
@@ -13,6 +17,7 @@ public class Constants {
         String GAME_IMG_DOWNLOADED = "kr.co.picklecode.crossmedia.hiddencatch.GAME_IMG_DOWNLOADED";
         String GAME_BGM = "kr.co.picklecode.crossmedia.hiddencatch.GAME_BGM";
         String GAME_EFFECT = "kr.co.picklecode.crossmedia.hiddencatch.GAME_EFFECT";
+        String GAME_HINT = "kr.co.picklecode.crossmedia.hiddencatch.GAME_HINT";
 
         String IS_ALARM_SET = "kr.co.picklecode.crossmedia.hiddencatch.isAlarmSet";
         String ALARM_TIME = "kr.co.picklecode.crossmedia.hiddencatch.alarmTime";

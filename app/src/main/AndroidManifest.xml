@@ -46,6 +46,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".RewardActivity"
+            android:theme="@style/Theme.Transparent"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ExitActivity"
