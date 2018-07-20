@@ -68,6 +68,7 @@ public class GameActivity extends BaseActivity {
                 break;
             }
             case R.id.pause : {
+                startActivityWithTransition(PauseActivity.class, R.anim.alpha_in, R.anim.alpha_out);
                 break;
             }
             default: break;

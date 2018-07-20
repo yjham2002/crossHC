@@ -42,6 +42,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PauseActivity"
+            android:theme="@style/Theme.Transparent"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RewardActivity"

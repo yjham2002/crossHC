@@ -68,7 +68,7 @@ public class StageActivity extends BaseActivity {
             }
             case R.id.startBtn:{
                 if(selectedStage != null){
-                    StageUtil.sendAndFinish(this, selectedStage, GameActivity.class);
+                    StageUtil.sendAndFinish(this, selectedStage, PregameActivity.class);
                 }else{
                     showToast("스테이지를 선택하세요.");
                 }

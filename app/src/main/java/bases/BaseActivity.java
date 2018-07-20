@@ -75,6 +75,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         startActivity(intent);
     }
 
+    protected void startActivityWithTransition(Class toGo, int start, int end){
+        final Intent intent = new Intent(this, toGo);
+        startActivity(intent);
+        overridePendingTransition(start, end);
+    }
+
     public void finishAndStartActivity(Class toGo){
         final Intent intent = new Intent(this, toGo);
         startActivity(intent);
