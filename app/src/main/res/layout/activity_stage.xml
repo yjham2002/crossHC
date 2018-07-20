@@ -65,9 +65,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
                 <View
-                    android:background="@color/transparent_gray"
+                    android:background="@color/image_shader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                <ImageView
+                    android:id="@+id/startBtn"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:src="@drawable/icon_hour_glass"
+                    android:layout_gravity="center"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp" />
             </FrameLayout>
             <TextView
                 android:id="@+id/adView"

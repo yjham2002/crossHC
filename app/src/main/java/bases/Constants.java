@@ -11,6 +11,8 @@ public class Constants {
         String GAME_UPDATE_CHECK = "kr.co.picklecode.crossmedia.hiddencatch.UPDATE_CHECK";
         String GAME_RECENT_VER = "kr.co.picklecode.crossmedia.hiddencatch.GAME_RECENT_VER";
         String GAME_IMG_DOWNLOADED = "kr.co.picklecode.crossmedia.hiddencatch.GAME_IMG_DOWNLOADED";
+        String GAME_BGM = "kr.co.picklecode.crossmedia.hiddencatch.GAME_BGM";
+        String GAME_EFFECT = "kr.co.picklecode.crossmedia.hiddencatch.GAME_EFFECT";
 
         String IS_ALARM_SET = "kr.co.picklecode.crossmedia.hiddencatch.isAlarmSet";
         String ALARM_TIME = "kr.co.picklecode.crossmedia.hiddencatch.alarmTime";

@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity {
             attachListenerAndSetEnabled();
         }else{
             startActivityForResult(new Intent(this, DownloadActivity.class), Constants.REQUEST.REQUEST_DOWNLOAD);
+            overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
         }
     }
 
@@ -93,6 +94,8 @@ public class MainActivity extends BaseActivity {
                     break;
                 }
                 case Constants.RESULT.RESULT_DOWNLOAD_FAIL:{
+                    PreferenceUtil.setBoolean(Constants.PREFERENCE.GAME_IMG_DOWNLOADED, false);
+
                     new ToastAndExit(MainActivity.this, "다시 시도하여 주시기 바랍니다. (-1)").run();
                     break;
                 }

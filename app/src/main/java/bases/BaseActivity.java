@@ -75,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         startActivity(intent);
     }
 
-    protected void finishAndStartActivity(Class toGo){
+    public void finishAndStartActivity(Class toGo){
         final Intent intent = new Intent(this, toGo);
         startActivity(intent);
         ActivityCompat.finishAffinity(this);

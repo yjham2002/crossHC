@@ -51,6 +51,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".DownloadActivity"
+            android:theme="@style/Theme.Transparent"
             android:screenOrientation="portrait" />
         <activity android:name=".StageActivity"
             android:screenOrientation="portrait" />

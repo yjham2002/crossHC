@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 
 public class DownloadActivity extends BaseActivity {
+
+    private TextView pst;
+    private View cancel;
 
     private DownloadManager downloadManager;
     private List<Long> downloadQueueList;
@@ -44,7 +49,7 @@ public class DownloadActivity extends BaseActivity {
             if(isSuccess) completeCount++;
             else failureCount++;
 
-            showToast(completeCount + " / " + totalCount);
+            pst.setText(completeCount + " / " + totalCount);
 
             if (simpleCount == totalCount) { // On All Downloads are Completed entirely
                 onDownloadFinishAnyway();
@@ -157,6 +162,11 @@ public class DownloadActivity extends BaseActivity {
         }
     }
 
+    private void init(){
+        pst = findViewById(R.id.pst);
+        cancel = findViewById(R.id.cancelD);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,6 +175,7 @@ public class DownloadActivity extends BaseActivity {
         /**
          * Initializing Activity and Data - Begin
          */
+        init();
         initDownloadElements();
 
         /**
