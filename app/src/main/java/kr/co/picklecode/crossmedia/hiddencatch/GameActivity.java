@@ -295,6 +295,7 @@ public class GameActivity extends BaseActivity {
     private void finishGame(boolean win){
         Log.e("GameActivity", "Game Finished : [Win : " + win + "]");
         this.resultBox.setLosed(!win);
+        StageUtil.saveWinningInfo(this.stageBox.getId(), false);
         StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out);
     }
 

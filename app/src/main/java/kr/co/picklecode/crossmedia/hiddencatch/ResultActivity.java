@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.Random;
 
 import bases.BaseActivity;
+import bases.utils.ToastAndExit;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
@@ -37,7 +38,7 @@ public class ResultActivity extends BaseActivity {
             }
             case R.id.r_next : {
                 final int sizeOfList = StageSynchronizer.getStageInstance().size();
-                final int currentPos = StageSynchronizer.getStageInstance().indexOf(this.resultBox.getStageBox());
+                final int currentPos = StageSynchronizer.indexOf(this.resultBox.getStageBox());
 
                 int nextPos;
                 if(this.resultBox.isChallenge()){
@@ -50,6 +51,10 @@ public class ResultActivity extends BaseActivity {
 
                 this.resultBox.setReplay(false);
                 this.resultBox.setStageBox(StageSynchronizer.getStageInstance().get(nextPos));
+
+                if(this.resultBox.getStageBox().getQuestions() == null || this.resultBox.getStageBox().getQuestions().size() == 0){
+                    new ToastAndExit(this, "스테이지 데이터가 올바르지 않아 게임을 종료합니다.").runWithLog("Stage Data is wrong.");
+                }
 
                 StageUtil.sendAndFinishWithTransition(this, this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out);
                 break;
@@ -72,7 +77,7 @@ public class ResultActivity extends BaseActivity {
             } else { // On Normal
                 this.reward_center.setVisibility(View.GONE);
                 showNormalReaction();
-                if (this.resultBox.getCurrentPosition() % 2 == 0) { // On Stage Even Number
+                if ((this.resultBox.getCurrentPosition() + 1) % 2 == 0) { // On Stage Even Number
                     this.reward_text_bottom.setText("" + 1);
                     StageUtil.changePoint(1);
                 } else { // On Stage Odd Number
@@ -84,11 +89,11 @@ public class ResultActivity extends BaseActivity {
 
     private void showNormalReaction(){
         Log.e("ResultActivity", "isHintUsed : " + this.resultBox.isHintUsed() + " / isHeartUsed : " + this.resultBox.isHeartUsed());
-        if(this.resultBox.isHeartUsed() && this.resultBox.isHintUsed()){
+        if(!this.resultBox.isHeartUsed() && !this.resultBox.isHintUsed()){
             showResultImage(R.drawable.img_result_amazing);
-        }else if(this.resultBox.isHeartUsed()){
+        }else if(!this.resultBox.isHeartUsed()){
             showResultImage(R.drawable.img_result_good);
-        }else if(this.resultBox.isHintUsed()){
+        }else if(!this.resultBox.isHintUsed()){
             showResultImage(R.drawable.img_result_good);
         }else{
             showResultImage(R.drawable.img_result_clear);

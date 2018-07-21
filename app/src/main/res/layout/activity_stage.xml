@@ -70,7 +70,7 @@
                     android:layout_height="match_parent" />
                 <ImageView
                     android:id="@+id/startBtn"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:src="@drawable/icon_hour_glass"
                     android:layout_gravity="center"

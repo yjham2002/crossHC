@@ -15,6 +15,7 @@ import bases.Constants;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.AnimUtil;
+import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
 public class PregameActivity extends BaseActivity {
@@ -76,8 +77,10 @@ public class PregameActivity extends BaseActivity {
             this.resultBox = transitBox;
 
             if(!this.resultBox.isReplay()){
+                final int currentPos = StageSynchronizer.indexOf(this.stageBox);
+                final int toApply = currentPos == -1 ? 0 : currentPos;
                 this.resultBox.setContinuous(this.resultBox.getContinuous() + 1);
-                this.resultBox.setCurrentPosition(this.stageBox.getOrder());
+                this.resultBox.setCurrentPosition(toApply);
             }
 
             this.resultBox.initForNewGame();

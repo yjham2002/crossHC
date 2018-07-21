@@ -10,7 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import bases.Configs;
@@ -181,6 +183,52 @@ public class StageUtil {
         if(toGo > MAX_HINT_COUNT || toGo < 0) return false;
         setPoint(toGo);
         return true;
+    }
+
+    public static String genKeyForWinInfo(int stageId){
+        return "stage-" + stageId;
+    }
+
+    public static void saveWinningInfo(int stageNo, boolean clearData){
+        final String stageId = genKeyForWinInfo(stageNo);
+
+        final HashMap<String, Integer> map;
+        if(clearData){
+            map = new HashMap<>();
+        }else {
+            map = getWinningInfo();
+            if (map.containsKey(stageId)) {
+                map.put(stageId, map.get(stageId) + 1);
+                Log.e("StageGrid", map.get(stageId) + "");
+            }
+            else {
+                map.put(stageId, 1);
+                Log.e("StageGrid", map.get(stageId) + "");
+            }
+        }
+
+        final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            final String json = objectMapper.writeValueAsString(map);
+            PreferenceUtil.setString(Constants.PREFERENCE.GAME_WIN, json);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static HashMap<String, Integer> getWinningInfo(){
+        final String json = PreferenceUtil.getString(Constants.PREFERENCE.GAME_WIN);
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        try{
+            if(json == null || json.trim().equals("")) return new HashMap<>();
+            final HashMap<String, Integer> map = objectMapper.readValue(json, HashMap.class);
+            return map;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return new HashMap<>();
     }
 
 }

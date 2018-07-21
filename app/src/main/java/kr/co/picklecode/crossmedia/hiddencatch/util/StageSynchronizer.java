@@ -45,6 +45,14 @@ public class StageSynchronizer {
         }
     }
 
+    public static int indexOf(StageBox stageBox){
+        for(int e = 0; e < stageInstance.size(); e++) {
+            StageBox stage = stageInstance.get(e);
+            if(stage.getId() == stageBox.getId()) return e;
+        }
+        return -1;
+    }
+
     public static boolean isLocalDataAvailable(){
         final String json = PreferenceUtil.getString(Constants.PREFERENCE.GAME_STAGE_OBJECT);
         if(json == null || json.trim().equals("") || json.trim().equals("null")) return false;
