@@ -79,7 +79,7 @@ public class GameActivity extends BaseActivity {
         animView.animate()
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .translationX(x - (animView.getWidth() / 2))
-                .translationY(y)
+                .translationY(y + (animView.getHeight()))
                 .setDuration(0);
 
         animView.setVisibility(View.VISIBLE);
