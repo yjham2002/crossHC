@@ -59,34 +59,10 @@ public class GameActivity extends BaseActivity {
         imgOrigin.setOnTouchBack(onTouchBack);
         imgQues.setOnTouchBack(onTouchBack);
 
-        imgOrigin.setOnTouchListener(touchHandler);
-        imgQues.setOnTouchListener(touchHandler);
-
         this.stageBox = StageUtil.executeStage(getIntent());
         this.selectedQuestionPos = StageUtil.setImageInto(imgOrigin, imgQues, this.stageBox);
         this.questionBox = stageBox.getQuestions().get(this.selectedQuestionPos);
     }
-
-    private View.OnTouchListener touchHandler = new View.OnTouchListener(){
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                float screenX = event.getX();
-                float screenY = event.getY();
-
-                int[] loc = new int[2];
-                v.getLocationOnScreen(loc);
-                Log.e("coordTest", screenX + ", " + screenY + " / " + v.getLeft() + ", " + v.getTop() + " / " + v.getX() + ", " + v.getY() + " / " + loc[0] + ", " + loc[1]
-                + " :: " + findViewById(R.id.topMenu).getX() + ", " + findViewById(R.id.topMenu).getY());
-
-//                float viewX = screenX - v.getLeft();
-//                float viewY = screenY - v.getTop();
-                displayAnim(R.drawable.anim_frame_incorrect, screenX + loc[0], screenY + loc[1]);
-                return true;
-            }
-            return false;
-        }
-    };
 
     private Handler hideHandler = new Handler();
     private Runnable hideRunnable = new Runnable() {
@@ -103,7 +79,7 @@ public class GameActivity extends BaseActivity {
         animView.animate()
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .translationX(x - (animView.getWidth() / 2))
-                .translationY(y - (animView.getHeight()))
+                .translationY(y)
                 .setDuration(0);
 
         animView.setVisibility(View.VISIBLE);
@@ -142,6 +118,19 @@ public class GameActivity extends BaseActivity {
         public void onTouch(View view, int motionEvent, float x, float y) {
             if(motionEvent == MotionEvent.ACTION_DOWN) {
                 Log.e("imgTouch", motionEvent + " : " + x + ", " + y + " /" + view.getWidth() + ":" + view.getHeight());
+
+                float screenX = x + view.getLeft();
+                float screenY = y + view.getTop();
+
+                int[] loc = new int[2];
+                view.getLocationOnScreen(loc);
+                Log.e("coordTest", screenX + ", " + screenY + " / " + view.getLeft() + ", " + view.getTop() + " / " + view.getX() + ", " + view.getY() + " / " + loc[0] + ", " + loc[1]
+                        + " :: " + findViewById(R.id.topMenu).getX() + ", " + findViewById(R.id.topMenu).getY());
+
+//                float viewX = screenX - v.getLeft();
+//                float viewY = screenY - v.getTop();
+                displayAnim(R.drawable.anim_frame_incorrect, screenX, screenY);
+
                 judge(x, y, view.getWidth(), view.getHeight());
             }
         }
