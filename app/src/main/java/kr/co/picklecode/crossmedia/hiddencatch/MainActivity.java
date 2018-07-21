@@ -24,7 +24,6 @@ import utils.PreferenceUtil;
 
 public class MainActivity extends BaseActivity {
 
-    private boolean disableView = true;
     private View btn_back, btn_reco, btn_bgm, btn_eff, btn_play, btn_cha;
 
     public void init(){
@@ -40,6 +39,7 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_back:{
+                exitAction();
                 break;
             }
             case R.id.btn_reco:{
@@ -160,6 +160,10 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void exitAction(){
+        startActivityWithTransition(ExitActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,4 +173,10 @@ public class MainActivity extends BaseActivity {
 
         checkUpdateAuto();
     }
+
+    @Override
+    public void onBackPressed() {
+        exitAction();
+    }
+
 }

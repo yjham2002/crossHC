@@ -2,8 +2,10 @@ package bases;
 
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -48,6 +50,21 @@ import kr.co.picklecode.crossmedia.hiddencatch.R;
  * @version 1.0.0
  */
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private static final String FILTER_AFFINITY_EXIT = "FinishingCall";
+
+    private BroadcastReceiver affinityExitReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e(BaseActivity.this.getClass().getSimpleName(), "Finishing Broadcast received.");
+            ActivityCompat.finishAffinity(BaseActivity.this);
+            finish();
+        }
+    };
+
+    protected void sendFinishingBroadcast(){
+        sendBroadcast(new Intent(FILTER_AFFINITY_EXIT));
+    }
 
     private InterstitialAd mInterstitialAd = null;
 
@@ -120,10 +137,25 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        registerReceiver(affinityExitReceiver, new IntentFilter(FILTER_AFFINITY_EXIT));
+
         commonInit();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(affinityExitReceiver);
+    }
+
     private void commonInit(){
+    }
+
+    protected void moveToMarket(String packageName){
+        Uri uri = Uri.parse("market://details?id=" + packageName);
+        Intent it = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(it);
     }
 
     protected boolean isNetworkEnable(){
@@ -305,64 +337,64 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * @param requestAppInstallAds indicates whether app install ads should be requested
      * @param requestContentAds    indicates whether content ads should be requested
      */
-    protected void refreshAd(boolean requestAppInstallAds, boolean requestContentAds) {
-        if (!requestAppInstallAds && !requestContentAds) {
-            Toast.makeText(this, "At least one ad format must be checked to request an ad.",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        AdLoader.Builder builder = new AdLoader.Builder(this, "ca-app-pub-1846833106939117/4314936497");
-
-        if (requestAppInstallAds) {
-            builder.forAppInstallAd(new NativeAppInstallAd.OnAppInstallAdLoadedListener() {
-                @Override
-                public void onAppInstallAdLoaded(NativeAppInstallAd ad) {
-                    FrameLayout frameLayout =
-                            findViewById(R.id.fl_adplaceholder);
-                    NativeAppInstallAdView adView = (NativeAppInstallAdView) getLayoutInflater()
-                            .inflate(R.layout.ad_app_install, null);
-                    populateAppInstallAdView(ad, adView);
-                    frameLayout.removeAllViews();
-                    frameLayout.addView(adView);
-                }
-            });
-        }
-
-        if (requestContentAds) {
-            builder.forContentAd(new NativeContentAd.OnContentAdLoadedListener() {
-                @Override
-                public void onContentAdLoaded(NativeContentAd ad) {
-                    FrameLayout frameLayout =
-                            findViewById(R.id.fl_adplaceholder);
-                    NativeContentAdView adView = (NativeContentAdView) getLayoutInflater()
-                            .inflate(R.layout.ad_content, null);
-                    populateContentAdView(ad, adView);
-                    frameLayout.removeAllViews();
-                    frameLayout.addView(adView);
-                }
-            });
-        }
-
-        VideoOptions videoOptions = new VideoOptions.Builder()
-                .setStartMuted(true)
-                .build();
-
-        NativeAdOptions adOptions = new NativeAdOptions.Builder()
-                .setVideoOptions(videoOptions)
-                .build();
-
-        builder.withNativeAdOptions(adOptions);
-
-        AdLoader adLoader = builder.withAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.e("AdLoader", "Loading Ads. Failed : " + errorCode);
-            }
-        }).build();
-
-        adLoader.loadAd(new AdRequest.Builder().addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2").addTestDevice("A054380EE96401ECDEB88482E433AEF2").build());
-    }
+//    protected void refreshAd(boolean requestAppInstallAds, boolean requestContentAds) {
+//        if (!requestAppInstallAds && !requestContentAds) {
+//            Toast.makeText(this, "At least one ad format must be checked to request an ad.",
+//                    Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        AdLoader.Builder builder = new AdLoader.Builder(this, "ca-app-pub-1846833106939117/4314936497");
+//
+//        if (requestAppInstallAds) {
+//            builder.forAppInstallAd(new NativeAppInstallAd.OnAppInstallAdLoadedListener() {
+//                @Override
+//                public void onAppInstallAdLoaded(NativeAppInstallAd ad) {
+//                    FrameLayout frameLayout =
+//                            findViewById(R.id.fl_adplaceholder);
+//                    NativeAppInstallAdView adView = (NativeAppInstallAdView) getLayoutInflater()
+//                            .inflate(R.layout.ad_app_install, null);
+//                    populateAppInstallAdView(ad, adView);
+//                    frameLayout.removeAllViews();
+//                    frameLayout.addView(adView);
+//                }
+//            });
+//        }
+//
+//        if (requestContentAds) {
+//            builder.forContentAd(new NativeContentAd.OnContentAdLoadedListener() {
+//                @Override
+//                public void onContentAdLoaded(NativeContentAd ad) {
+//                    FrameLayout frameLayout =
+//                            findViewById(R.id.fl_adplaceholder);
+//                    NativeContentAdView adView = (NativeContentAdView) getLayoutInflater()
+//                            .inflate(R.layout.ad_content, null);
+//                    populateContentAdView(ad, adView);
+//                    frameLayout.removeAllViews();
+//                    frameLayout.addView(adView);
+//                }
+//            });
+//        }
+//
+//        VideoOptions videoOptions = new VideoOptions.Builder()
+//                .setStartMuted(true)
+//                .build();
+//
+//        NativeAdOptions adOptions = new NativeAdOptions.Builder()
+//                .setVideoOptions(videoOptions)
+//                .build();
+//
+//        builder.withNativeAdOptions(adOptions);
+//
+//        AdLoader adLoader = builder.withAdListener(new AdListener() {
+//            @Override
+//            public void onAdFailedToLoad(int errorCode) {
+//                Log.e("AdLoader", "Loading Ads. Failed : " + errorCode);
+//            }
+//        }).build();
+//
+//        adLoader.loadAd(new AdRequest.Builder().addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2").addTestDevice("A054380EE96401ECDEB88482E433AEF2").build());
+//    }
 
     /**
      * Bind itself as a OnClickListener on parameters
