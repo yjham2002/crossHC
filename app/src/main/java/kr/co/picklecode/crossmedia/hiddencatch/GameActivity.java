@@ -20,6 +20,7 @@ import java.util.Set;
 import bases.BaseActivity;
 import kr.co.picklecode.crossmedia.hiddencatch.model.AnswerBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.QuestionBox;
+import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 import kr.co.picklecode.crossmedia.hiddencatch.view.OnTouchBack;
@@ -27,13 +28,17 @@ import kr.co.picklecode.crossmedia.hiddencatch.view.TouchableImageView;
 
 public class GameActivity extends BaseActivity {
 
+    private static final int MAX_LIFE = 5;
+    private int currentLife;
+
     private StageBox stageBox;
     private QuestionBox questionBox;
     private int selectedQuestionPos = -1;
+    private ResultBox resultBox;
     List<AnswerBox> answerBoxList;
     Set<AnswerBox> answered;
 
-    private TextView hintText, scoreText;
+    private TextView hintText, scoreText, scoreTextT;
     private View btn_pause, hintBack;
     private ImageView life, animView;
     private TouchableImageView imgOrigin, imgQues;
@@ -54,6 +59,7 @@ public class GameActivity extends BaseActivity {
         this.hintBack = findViewById(R.id.hintBack);
         this.btn_pause = findViewById(R.id.pause);
         this.scoreText = findViewById(R.id.score);
+        this.scoreTextT = findViewById(R.id.scoreT);
         this.imgOrigin = findViewById(R.id.imgOrigin);
         this.imgQues = findViewById(R.id.imgQues);
         this.life = findViewById(R.id.life);
@@ -68,6 +74,16 @@ public class GameActivity extends BaseActivity {
         this.questionBox = stageBox.getQuestions().get(this.selectedQuestionPos);
         this.answerBoxList = questionBox.getAnswers();
         this.answered = new HashSet<>();
+        this.resultBox = new ResultBox();
+        this.resultBox.setStageBox(this.stageBox);
+
+        this.currentLife = MAX_LIFE;
+
+        updateViewsAndCheck();
+    }
+
+    private void showHint(){
+        Log.e("GameActivity", "Hint Showed");
     }
 
     private Handler hideHandler = new Handler();
@@ -106,12 +122,26 @@ public class GameActivity extends BaseActivity {
         switch (v.getId()){
             case R.id.hintBack : {
                 final int point = StageUtil.getPoint();
-                if(point == 0){
+                if(point <= 0){
                     startActivityWithTransition(RewardActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+                }else{
+                    boolean changed = StageUtil.changePoint(-1);
+                    if(changed){
+                        showHint();
+                        updateViewsAndCheck();
+                    }
                 }
                 break;
             }
             case R.id.pause : {
+                /**
+                 * Test Unit Begin
+                 */
+                StageUtil.setPoint(5);
+                /**
+                 * End
+                 */
+
                 startActivityWithTransition(PauseActivity.class, R.anim.alpha_in, R.anim.alpha_out);
                 break;
             }
@@ -124,20 +154,7 @@ public class GameActivity extends BaseActivity {
         public void onTouch(View view, int motionEvent, float x, float y) {
             if(motionEvent == MotionEvent.ACTION_DOWN) {
                 Log.e("imgTouch", motionEvent + " : " + x + ", " + y + " /" + view.getWidth() + ":" + view.getHeight());
-
-                float screenX = x + view.getLeft();
-                float screenY = y + view.getTop();
-
-                int[] loc = new int[2];
-                view.getLocationOnScreen(loc);
-                Log.e("coordTest", screenX + ", " + screenY + " / " + view.getLeft() + ", " + view.getTop() + " / " + view.getX() + ", " + view.getY() + " / " + loc[0] + ", " + loc[1]
-                        + " :: " + findViewById(R.id.topMenu).getX() + ", " + findViewById(R.id.topMenu).getY());
-
-//                float viewX = screenX - v.getLeft();
-//                float viewY = screenY - v.getTop();
-                displayAnim(R.drawable.anim_frame_incorrect, screenX, screenY);
-
-                judge(x, y, view.getWidth(), view.getHeight());
+                judge(x, y, view.getWidth(), view.getHeight(), view.getLeft(), view.getTop());
             }
         }
     };
@@ -146,7 +163,9 @@ public class GameActivity extends BaseActivity {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
-    private void judge(float tX, float tY, int width, int height){
+    private void judge(float tX, float tY, int width, int height, float vLeft, float vTop){
+        if(answered.size() == answerBoxList.size() || currentLife <= 0) return;
+
         final double pX = tX / width;
         final double pY = tY / height;
 
@@ -169,16 +188,53 @@ public class GameActivity extends BaseActivity {
             }
         }
 
+        final float screenX = tX + vLeft;
+        final float screenY = tY + vTop;
+
         if(minVal < min.getThreshold()){ // On Answer
             if(answered.contains(min)){ // Already answered
                 // Do nothing
             }else{
+                displayAnim(R.drawable.anim_frame_correct, screenX, screenY);
                 react(true, min);
                 answered.add(min);
             }
         }else{ // On Failure
+            this.resultBox.setHeartUsed(true);
+            if(this.currentLife > 0) this.currentLife--;
+            displayAnim(R.drawable.anim_frame_incorrect, screenX, screenY);
             react(false, min);
         }
+
+        updateViewsAndCheck();
+    }
+
+    private Handler judgeHandler = new Handler();
+    private Runnable judgeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if(currentLife <= 0){ // On Failure
+                finishGame(false);
+            }else if(answered.size() == answerBoxList.size()){ // On Success
+                finishGame(true);
+            }else{
+                // Do nothing
+            }
+        }
+    };
+
+    private void updateViewsAndCheck(){
+        judgeHandler.removeCallbacks(judgeRunnable);
+        this.scoreText.setText("" + answered.size());
+        this.scoreTextT.setText("" + answerBoxList.size());
+        this.hintText.setText("" + StageUtil.getPoint());
+
+        judgeHandler.postDelayed(judgeRunnable, 2000);
+    }
+
+    private void finishGame(boolean win){
+        Log.e("GameActivity", "Game Finished : [Win : " + win + "]");
+        StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out);
     }
 
     private void react(boolean isCorrect, AnswerBox answerBox){

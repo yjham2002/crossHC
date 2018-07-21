@@ -17,6 +17,7 @@ import bases.Configs;
 import bases.Constants;
 import kr.co.picklecode.crossmedia.hiddencatch.R;
 import kr.co.picklecode.crossmedia.hiddencatch.model.QuestionBox;
+import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.view.TouchableImageView;
 import utils.PreferenceUtil;
@@ -30,12 +31,23 @@ public class StageUtil {
     private static final int MAX_HINT_COUNT = 99;
 
     private static final String KEY_STAGE = "KEY_INTERNAL_STAGE_INTENT";
+    private static final String KEY_RESULT = "KEY_INTERNAL_RESULT_INTENT";
 
     public static void injectStage(Intent intent, StageBox stageBox){
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             final String json = objectMapper.writeValueAsString(stageBox);
             intent.putExtra(KEY_STAGE, json);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void injectResult(Intent intent, ResultBox resultBox){
+        final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            final String json = objectMapper.writeValueAsString(resultBox);
+            intent.putExtra(KEY_RESULT, json);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -57,8 +69,29 @@ public class StageUtil {
         return null;
     }
 
+    public static ResultBox executeResult(Intent intent){
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        if(intent.getExtras().containsKey(KEY_RESULT)) {
+            try {
+                final String json = intent.getExtras().getString(KEY_RESULT);
+                final ResultBox resultBox = objectMapper.readValue(json, ResultBox.class);
+
+                return resultBox;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public static void sendAndFinishWithTransition(Activity activity, StageBox stageBox, Class toGo, int enterAnim, int exitAnim){
         sendAndFinish(activity, stageBox, toGo);
+        activity.overridePendingTransition(enterAnim, exitAnim);
+    }
+
+    public static void sendAndFinishWithTransition(Activity activity, ResultBox resultBox, Class toGo, int enterAnim, int exitAnim){
+        sendAndFinish(activity, resultBox, toGo);
         activity.overridePendingTransition(enterAnim, exitAnim);
     }
 
@@ -71,8 +104,21 @@ public class StageUtil {
         activity.finish();
     }
 
+    public static void sendAndFinish(Activity activity, ResultBox resultBox, Class toGo, boolean isChallenge){
+        final Intent intent = new Intent(activity, toGo);
+        injectResult(intent, resultBox);
+        intent.putExtra(Constants.INTENT_KEY.GAME_KEY, isChallenge);
+        activity.startActivity(intent);
+        ActivityCompat.finishAffinity(activity);
+        activity.finish();
+    }
+
     public static void sendAndFinish(Activity activity, StageBox stageBox, Class toGo){
         sendAndFinish(activity, stageBox, toGo, false);
+    }
+
+    public static void sendAndFinish(Activity activity, ResultBox resultBox, Class toGo){
+        sendAndFinish(activity, resultBox, toGo, false);
     }
 
     /**
@@ -118,7 +164,7 @@ public class StageUtil {
     }
 
     public static void setPoint(int amount){
-        PreferenceUtil.setInt(Constants.PREFERENCE.GAME_HINT, 0);
+        PreferenceUtil.setInt(Constants.PREFERENCE.GAME_HINT, amount);
     }
 
     /**
@@ -126,7 +172,8 @@ public class StageUtil {
      * @return returns false when the amount of point cannot be changed
      */
     public static boolean changePoint(int amount){
-        final int toGo = getPoint() + amount;
+        int toGo = getPoint() + amount;
+        if(amount < 0 && getPoint() > MAX_HINT_COUNT) toGo = MAX_HINT_COUNT + amount;
         if(toGo > MAX_HINT_COUNT || toGo < 0) return false;
         setPoint(toGo);
         return true;

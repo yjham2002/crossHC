@@ -31,14 +31,39 @@
                         android:background="?attr/selectableItemBackground"
                         android:layout_width="@dimen/nav_icon_size"
                         android:layout_height="@dimen/nav_icon_size" />
-                    <TextView
-                        android:id="@+id/score"
+                    <LinearLayout
+                        android:gravity="bottom"
                         android:layout_gravity="center"
-                        android:text="0/5"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size" />
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/score"
+                            android:text="0"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/separator"
+                            android:text="/"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/scoreT"
+                            android:text="0"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="18dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_marginLeft="10dp"

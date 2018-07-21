@@ -12,6 +12,8 @@ public class ResultBox {
     private boolean isHintUsed = false;
     private boolean isHeartUsed = false;
 
+    public ResultBox(){}
+
     public ResultBox(StageBox stageBox, int progressInChallenge, int currentPosition, boolean isHintUsed, boolean isHeartUsed) {
         this.stageBox = stageBox;
         this.continuous = progressInChallenge;
