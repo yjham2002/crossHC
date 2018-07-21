@@ -1,11 +1,13 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +31,7 @@ public class GameActivity extends BaseActivity {
 
     private TextView hintText, scoreText;
     private View btn_pause, hintBack;
-    private ImageView life;
+    private ImageView life, animView;
     private TouchableImageView imgOrigin, imgQues;
     private MediaPlayer mediaPlayer;
 
@@ -43,6 +45,7 @@ public class GameActivity extends BaseActivity {
     }
 
     private void initGame(){
+        this.animView = findViewById(R.id.animView);
         this.hintText = findViewById(R.id.hint);
         this.hintBack = findViewById(R.id.hintBack);
         this.btn_pause = findViewById(R.id.pause);
@@ -56,9 +59,64 @@ public class GameActivity extends BaseActivity {
         imgOrigin.setOnTouchBack(onTouchBack);
         imgQues.setOnTouchBack(onTouchBack);
 
+        imgOrigin.setOnTouchListener(touchHandler);
+        imgQues.setOnTouchListener(touchHandler);
+
         this.stageBox = StageUtil.executeStage(getIntent());
         this.selectedQuestionPos = StageUtil.setImageInto(imgOrigin, imgQues, this.stageBox);
         this.questionBox = stageBox.getQuestions().get(this.selectedQuestionPos);
+    }
+
+    private View.OnTouchListener touchHandler = new View.OnTouchListener(){
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                float screenX = event.getX();
+                float screenY = event.getY();
+
+                int[] loc = new int[2];
+                v.getLocationOnScreen(loc);
+                Log.e("coordTest", screenX + ", " + screenY + " / " + v.getLeft() + ", " + v.getTop() + " / " + v.getX() + ", " + v.getY() + " / " + loc[0] + ", " + loc[1]
+                + " :: " + findViewById(R.id.topMenu).getX() + ", " + findViewById(R.id.topMenu).getY());
+
+//                float viewX = screenX - v.getLeft();
+//                float viewY = screenY - v.getTop();
+                displayAnim(R.drawable.anim_frame_incorrect, screenX + loc[0], screenY + loc[1]);
+                return true;
+            }
+            return false;
+        }
+    };
+
+    private Handler hideHandler = new Handler();
+    private Runnable hideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            animView.setVisibility(View.INVISIBLE);
+        }
+    };
+
+    private void displayAnim(final int id, float x, float y){
+        hideHandler.removeCallbacks(hideRunnable);
+        final long showTime = 1500;
+
+        animView.animate()
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .translationX(x - (animView.getWidth() / 2))
+                .translationY(y - (animView.getHeight()))
+                .setDuration(0);
+
+        animView.setVisibility(View.VISIBLE);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startAnimationWithIn(animView, id, 0);
+                stopAnimationOf(animView, showTime);
+            }
+        }, 0);
+
+        hideHandler.postDelayed(hideRunnable, showTime);
     }
 
     @Override

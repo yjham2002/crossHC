@@ -138,4 +138,11 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/animView"
+        android:visibility="invisible"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
 </FrameLayout>

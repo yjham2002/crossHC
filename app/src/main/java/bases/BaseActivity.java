@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -41,6 +42,8 @@ import com.google.android.gms.ads.formats.NativeContentAdView;
 
 import java.io.File;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import kr.co.picklecode.crossmedia.hiddencatch.R;
 
@@ -73,6 +76,32 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void finishActivityForResult(int resultCode, Intent intent){
         setResult(resultCode, intent);
         finish();
+    }
+
+    protected void startAnimationWithIn(final ImageView imageView, int animId, long delay){
+        imageView.setBackgroundResource(animId);
+
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                AnimationDrawable ani = (AnimationDrawable)imageView.getBackground();
+                ani.start();
+            }
+        };
+        final Timer timer = new Timer(false);
+        timer.schedule(timerTask, delay);
+    }
+
+    protected void stopAnimationOf(final ImageView imageView, long delay){
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                AnimationDrawable ani = (AnimationDrawable)imageView.getBackground();
+                if(ani.isRunning()) ani.stop();
+            }
+        };
+        final Timer timer = new Timer(false);
+        timer.schedule(timerTask, delay);
     }
 
     protected boolean canDrawOverlaysTest() {
