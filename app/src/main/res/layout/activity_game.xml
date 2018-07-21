@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context="kr.co.picklecode.crossmedia.hiddencatch.GameActivity">
     <RelativeLayout
@@ -13,7 +13,7 @@
         <FrameLayout
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/nav_height"
+            android:layout_height="wrap_content"
             android:id="@+id/topMenu">
             <LinearLayout
                 android:layout_margin="10dp"
@@ -95,14 +95,14 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ImageView
+
+                    <com.github.lzyzsd.circleprogress.CircleProgress
+                        android:layout_marginLeft="50dp"
                         android:id="@+id/life"
-                        android:layout_gravity="center"
-                        android:src="@color/red"
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
                         android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size" />
+                        android:layout_height="@dimen/nav_icon_size"
+                        custom:circle_text_color="@color/transparent"
+                        />
                 </FrameLayout>
                 <FrameLayout
                     android:layout_marginLeft="10dp"

@@ -11,6 +11,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -40,7 +42,8 @@ public class GameActivity extends BaseActivity {
 
     private TextView hintText, scoreText, scoreTextT;
     private View btn_pause, hintBack;
-    private ImageView life, animView;
+    private ImageView animView;
+    private CircleProgress life;
     private TouchableImageView imgOrigin, imgQues;
     private MediaPlayer mediaPlayer;
 
@@ -78,6 +81,9 @@ public class GameActivity extends BaseActivity {
         this.resultBox.setStageBox(this.stageBox);
 
         this.currentLife = MAX_LIFE;
+
+        final int lifeRatio = (int)(((double)currentLife / (double)MAX_LIFE) * 100.0d);
+        this.life.setProgress(lifeRatio);
 
         updateViewsAndCheck();
     }
@@ -225,11 +231,39 @@ public class GameActivity extends BaseActivity {
 
     private void updateViewsAndCheck(){
         judgeHandler.removeCallbacks(judgeRunnable);
+
+        refeshProgress();
         this.scoreText.setText("" + answered.size());
         this.scoreTextT.setText("" + answerBoxList.size());
         this.hintText.setText("" + StageUtil.getPoint());
 
         judgeHandler.postDelayed(judgeRunnable, 2000);
+    }
+
+    private static final int lifeInterval = 1;
+    private Handler lifeHandler = new Handler();
+    private Runnable lifeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            final int lifeRatio = (int)(((double)currentLife / (double)MAX_LIFE) * 100.0d);
+            final int currentProgress = life.getProgress();
+            if(lifeRatio > currentProgress) {
+                life.setProgress(currentProgress + lifeInterval);
+                lifeHandler.postDelayed(lifeRunnable, 10);
+            }
+            else if(lifeRatio < currentProgress) {
+                life.setProgress(currentProgress - lifeInterval);
+                lifeHandler.postDelayed(lifeRunnable, 10);
+            }
+            else{
+                lifeHandler.removeCallbacks(lifeRunnable);
+            }
+        }
+    };
+
+    private void refeshProgress(){
+        lifeHandler.removeCallbacks(lifeRunnable);
+        lifeHandler.post(lifeRunnable);
     }
 
     private void finishGame(boolean win){
