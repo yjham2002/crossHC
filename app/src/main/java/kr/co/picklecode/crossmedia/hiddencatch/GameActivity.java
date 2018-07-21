@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import bases.BaseActivity;
 import kr.co.picklecode.crossmedia.hiddencatch.model.AnswerBox;
@@ -28,6 +30,8 @@ public class GameActivity extends BaseActivity {
     private StageBox stageBox;
     private QuestionBox questionBox;
     private int selectedQuestionPos = -1;
+    List<AnswerBox> answerBoxList;
+    Set<AnswerBox> answered;
 
     private TextView hintText, scoreText;
     private View btn_pause, hintBack;
@@ -62,6 +66,8 @@ public class GameActivity extends BaseActivity {
         this.stageBox = StageUtil.executeStage(getIntent());
         this.selectedQuestionPos = StageUtil.setImageInto(imgOrigin, imgQues, this.stageBox);
         this.questionBox = stageBox.getQuestions().get(this.selectedQuestionPos);
+        this.answerBoxList = questionBox.getAnswers();
+        this.answered = new HashSet<>();
     }
 
     private Handler hideHandler = new Handler();
@@ -141,7 +147,6 @@ public class GameActivity extends BaseActivity {
     }
 
     private void judge(float tX, float tY, int width, int height){
-        List<AnswerBox> answerBoxList = questionBox.getAnswers();
         final double pX = tX / width;
         final double pY = tY / height;
 
@@ -165,7 +170,12 @@ public class GameActivity extends BaseActivity {
         }
 
         if(minVal < min.getThreshold()){ // On Answer
-            react(true, min);
+            if(answered.contains(min)){ // Already answered
+                // Do nothing
+            }else{
+                react(true, min);
+                answered.add(min);
+            }
         }else{ // On Failure
             react(false, min);
         }
