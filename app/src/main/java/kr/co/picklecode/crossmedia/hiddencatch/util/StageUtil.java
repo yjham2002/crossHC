@@ -56,6 +56,9 @@ public class StageUtil {
     public static StageBox executeStage(Intent intent){
         final ObjectMapper objectMapper = new ObjectMapper();
 
+        final ResultBox resultBox = executeResult(intent);
+        if(resultBox != null && resultBox.getStageBox() != null) return resultBox.getStageBox();
+
         if(intent.getExtras().containsKey(KEY_STAGE)) {
             try {
                 final String json = intent.getExtras().getString(KEY_STAGE);
@@ -85,8 +88,8 @@ public class StageUtil {
         return null;
     }
 
-    public static void sendAndFinishWithTransition(Activity activity, StageBox stageBox, Class toGo, int enterAnim, int exitAnim){
-        sendAndFinish(activity, stageBox, toGo);
+    public static void sendAndFinishWithTransition(Activity activity, StageBox stageBox, Class toGo, int enterAnim, int exitAnim, boolean isChallenge){
+        sendAndFinish(activity, stageBox, toGo, isChallenge);
         activity.overridePendingTransition(enterAnim, exitAnim);
     }
 
@@ -174,6 +177,7 @@ public class StageUtil {
     public static boolean changePoint(int amount){
         int toGo = getPoint() + amount;
         if(amount < 0 && getPoint() > MAX_HINT_COUNT) toGo = MAX_HINT_COUNT + amount;
+        if(amount > 0 && toGo > MAX_HINT_COUNT) toGo = MAX_HINT_COUNT;
         if(toGo > MAX_HINT_COUNT || toGo < 0) return false;
         setPoint(toGo);
         return true;

@@ -12,20 +12,24 @@ import android.widget.TextView;
 
 import bases.BaseActivity;
 import bases.Constants;
+import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.AnimUtil;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
 public class PregameActivity extends BaseActivity {
 
+    private ResultBox resultBox;
+
     private TextView levelText, startText, chText;
+    private boolean isC = false;
 
     private StageBox stageBox;
     private Handler transitionHandler = new Handler();
     private Runnable transitRunnable = new Runnable() {
         @Override
         public void run() {
-            StageUtil.sendAndFinishWithTransition(PregameActivity.this, stageBox, GameActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+            StageUtil.sendAndFinishWithTransition(PregameActivity.this, stageBox, GameActivity.class, R.anim.alpha_in, R.anim.alpha_out, PregameActivity.this.isC);
         }
     };
 
@@ -62,13 +66,30 @@ public class PregameActivity extends BaseActivity {
 
         this.stageBox = StageUtil.executeStage(intent);
 
-        boolean isC = false;
+        final ResultBox transitBox = StageUtil.executeResult(intent);
+
+        if(transitBox == null){
+            this.resultBox = new ResultBox();
+            this.resultBox.setContinuous(1);
+            this.resultBox.setCurrentPosition(1);
+        }else{
+            this.resultBox = transitBox;
+
+            if(!this.resultBox.isReplay()){
+                this.resultBox.setContinuous(this.resultBox.getContinuous() + 1);
+                this.resultBox.setCurrentPosition(this.stageBox.getOrder());
+            }
+
+            this.resultBox.initForNewGame();
+        }
+
+        this.isC = false;
 
         if(intent.getExtras().containsKey(Constants.INTENT_KEY.GAME_KEY)){
             if(intent.getExtras().getBoolean(Constants.INTENT_KEY.GAME_KEY)){
                 Log.e("PregameActivity", "Challenge Mode");
                 this.chText.setVisibility(View.VISIBLE);
-                isC = true;
+                this.isC = true;
             }else{
                 Log.e("PregameActivity", "Normal Mode");
                 this.chText.setVisibility(View.GONE);
@@ -77,6 +98,9 @@ public class PregameActivity extends BaseActivity {
             Log.e("PregameActivity", "Key does not exist.");
             this.chText.setVisibility(View.GONE);
         }
+
+        int displayLevel = isC ? this.resultBox.getContinuous() : this.resultBox.getCurrentPosition();
+        this.levelText.setText("LEVEL " + displayLevel);
 
         playAnimation(isC);
     }

@@ -1,9 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="kr.co.picklecode.crossmedia.hiddencatch.ResultActivity">
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    tools:context="kr.co.picklecode.crossmedia.hiddencatch.PregameActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp">
+            <ImageView
+                android:id="@+id/result_anim"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+            <ImageView
+                android:layout_gravity="top|center_horizontal"
+                android:id="@+id/result_img"
+                android:src="@drawable/img_result_clear"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/result_anim_p"
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+            <LinearLayout
+                android:id="@+id/reward_center"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+                <ImageView
+                    android:src="@drawable/icon_hour_glass"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp" />
+                <TextView
+                    android:textSize="30dp"
+                    android:textColor="@color/white"
+                    android:text="X"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/reward_text"
+                    android:textSize="45dp"
+                    android:textColor="@color/white"
+                    android:text="15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="30dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="left|center_vertical"
+                android:id="@+id/r_exit"
+                android:clickable="true"
+                android:src="@drawable/icon_hour_glass"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/r_replay"
+                android:clickable="true"
+                android:src="@drawable/icon_hour_glass"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+            <ImageView
+                android:layout_gravity="right|center_vertical"
+                android:id="@+id/r_next"
+                android:clickable="true"
+                android:src="@drawable/icon_hour_glass"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/reward_bottom"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/icon_hour_glass"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="X"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/reward_text_b"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>

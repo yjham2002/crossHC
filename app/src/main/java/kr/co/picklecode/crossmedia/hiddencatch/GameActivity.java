@@ -1,5 +1,6 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import bases.BaseActivity;
+import bases.Constants;
 import kr.co.picklecode.crossmedia.hiddencatch.model.AnswerBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.QuestionBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
@@ -72,13 +74,36 @@ public class GameActivity extends BaseActivity {
         imgOrigin.setOnTouchBack(onTouchBack);
         imgQues.setOnTouchBack(onTouchBack);
 
-        this.stageBox = StageUtil.executeStage(getIntent());
+        final Intent intent = getIntent();
+
+        this.stageBox = StageUtil.executeStage(intent);
+
         this.selectedQuestionPos = StageUtil.setImageInto(imgOrigin, imgQues, this.stageBox);
         this.questionBox = stageBox.getQuestions().get(this.selectedQuestionPos);
         this.answerBoxList = questionBox.getAnswers();
         this.answered = new HashSet<>();
-        this.resultBox = new ResultBox();
+
+        final ResultBox transitBox = StageUtil.executeResult(intent);
+
+        if(transitBox == null){
+            this.resultBox = new ResultBox();
+        }else{
+            transitBox.initForNewGame();
+            this.resultBox = transitBox;
+        }
+
         this.resultBox.setStageBox(this.stageBox);
+
+        if(intent.getExtras().containsKey(Constants.INTENT_KEY.GAME_KEY)){
+            if(intent.getExtras().getBoolean(Constants.INTENT_KEY.GAME_KEY)){
+                Log.e("GameActivity", "Challenge Mode");
+                this.resultBox.setChallenge(true);
+            }else{
+                Log.e("GameActivity", "Normal Mode");
+            }
+        }else {
+            Log.e("GameActivity", "Key does not exist.");
+        }
 
         this.currentLife = MAX_LIFE;
 
@@ -90,6 +115,7 @@ public class GameActivity extends BaseActivity {
 
     private void showHint(){
         Log.e("GameActivity", "Hint Showed");
+        this.resultBox.setHintUsed(true);
     }
 
     private Handler hideHandler = new Handler();
@@ -268,6 +294,7 @@ public class GameActivity extends BaseActivity {
 
     private void finishGame(boolean win){
         Log.e("GameActivity", "Game Finished : [Win : " + win + "]");
+        this.resultBox.setLosed(!win);
         StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out);
     }
 

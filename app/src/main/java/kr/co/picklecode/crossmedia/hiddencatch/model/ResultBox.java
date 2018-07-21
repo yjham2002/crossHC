@@ -7,19 +7,32 @@ package kr.co.picklecode.crossmedia.hiddencatch.model;
 public class ResultBox {
 
     private StageBox stageBox;
-    private int continuous = -1;
-    private int currentPosition = -1;
+    private int continuous = 0;
+    private int currentPosition = 0;
     private boolean isHintUsed = false;
     private boolean isHeartUsed = false;
+    private boolean isLosed = false;
+    private boolean isChallenge = false;
+
+    private boolean isReplay = false;
 
     public ResultBox(){}
 
-    public ResultBox(StageBox stageBox, int progressInChallenge, int currentPosition, boolean isHintUsed, boolean isHeartUsed) {
-        this.stageBox = stageBox;
-        this.continuous = progressInChallenge;
-        this.currentPosition = currentPosition;
-        this.isHintUsed = isHintUsed;
-        this.isHeartUsed = isHeartUsed;
+    public void initForNewGame(){
+        this.stageBox = null;
+        this.isHintUsed = false;
+        this.isHeartUsed = false;
+        this.isLosed = false;
+        this.isChallenge = false;
+        this.isReplay = false;
+    }
+
+    public boolean isReplay() {
+        return isReplay;
+    }
+
+    public void setReplay(boolean replay) {
+        isReplay = replay;
     }
 
     @Override
@@ -30,7 +43,25 @@ public class ResultBox {
                 ", currentPosition=" + currentPosition +
                 ", isHintUsed=" + isHintUsed +
                 ", isHeartUsed=" + isHeartUsed +
+                ", isLosed=" + isLosed +
+                ", isChallenge=" + isChallenge +
                 '}';
+    }
+
+    public boolean isLosed() {
+        return isLosed;
+    }
+
+    public void setLosed(boolean losed) {
+        isLosed = losed;
+    }
+
+    public boolean isChallenge() {
+        return isChallenge;
+    }
+
+    public void setChallenge(boolean challenge) {
+        isChallenge = challenge;
     }
 
     public StageBox getStageBox() {
