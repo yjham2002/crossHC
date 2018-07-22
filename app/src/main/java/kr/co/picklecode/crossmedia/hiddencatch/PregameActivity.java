@@ -69,15 +69,15 @@ public class PregameActivity extends BaseActivity {
 
         final ResultBox transitBox = StageUtil.executeResult(intent);
 
+        final int currentPos = StageSynchronizer.indexOf(this.stageBox);
+
         if(transitBox == null){
             Log.e("PregameActivity", "transitBox is null. Initializing Data.");
             this.resultBox = new ResultBox();
             StageUtil.setContinuous(1);
-            this.resultBox.setCurrentPosition(0);
+            this.resultBox.setCurrentPosition(currentPos);
         }else{
             this.resultBox = transitBox;
-
-            final int currentPos = StageSynchronizer.indexOf(this.stageBox);
             final int toApply = currentPos == -1 ? 0 : currentPos;
 
             Log.e("PregameActivity", "transitBox has passed. [CurrentPos : " + currentPos + " / Applied : " + toApply + "]");

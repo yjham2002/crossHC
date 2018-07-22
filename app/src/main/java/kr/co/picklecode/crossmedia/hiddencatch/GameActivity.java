@@ -139,7 +139,9 @@ public class GameActivity extends BaseActivity {
     private static final long SHOW_HINT_TIME = 1500;
 
     private void showHint(){
-        if(answered.size() == answerBoxList.size()) return;
+        if(answered.size() == answerBoxList.size() || answerBoxList.size() == 0) return;
+
+        hideHintHandler.removeCallbacks(hideHintRunnable);
 
         Log.e("GameActivity", "Hint Showed");
         this.resultBox.setHintUsed(true);
