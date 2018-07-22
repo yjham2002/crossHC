@@ -82,7 +82,7 @@ public class ResultActivity extends BaseActivity {
             } else { // On Normal
                 this.reward_center.setVisibility(View.GONE);
                 showNormalReaction();
-                if ((this.resultBox.getCurrentPosition() + 1) % 2 == 0) { // On Stage Even Number
+                if (StageUtil.getContinuous() % 2 == 0) { // On Stage Even Number
                     this.reward_text_bottom.setText("" + 1);
                     StageUtil.changePoint(1);
                 } else { // On Stage Odd Number
