@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Vector;
 
+import bases.Configs;
 import bases.imageTransform.RoundedTransform;
 import kr.co.picklecode.crossmedia.hiddencatch.R;
 import kr.co.picklecode.crossmedia.hiddencatch.model.RecommendBox;
@@ -59,9 +60,11 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.Recycler
 
         holder.title.setText(recommendBox.getAppName());
         if(recommendBox.getImgPath() != null && !recommendBox.getImgPath().trim().equals("")){
+            String actualUrl = recommendBox.getImgPath();
+            if(!actualUrl.startsWith("http")) actualUrl = Configs.BASE_URL + Configs.BASE_IMG_POSTFIX + actualUrl;
             Picasso
                     .get()
-                    .load(recommendBox.getImgPath())
+                    .load(actualUrl)
                     .centerCrop()
                     .resize(150, 150)
                     .placeholder(R.drawable.icon_hour_glass)
