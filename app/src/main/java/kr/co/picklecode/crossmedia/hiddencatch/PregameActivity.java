@@ -70,17 +70,24 @@ public class PregameActivity extends BaseActivity {
         final ResultBox transitBox = StageUtil.executeResult(intent);
 
         if(transitBox == null){
+            Log.e("PregameActivity", "transitBox is null. Initializing Data.");
             this.resultBox = new ResultBox();
             this.resultBox.setContinuous(1);
-            this.resultBox.setCurrentPosition(1);
+            this.resultBox.setCurrentPosition(0);
         }else{
             this.resultBox = transitBox;
 
+            final int currentPos = StageSynchronizer.indexOf(this.stageBox);
+            final int toApply = currentPos == -1 ? 0 : currentPos;
+
+            Log.e("PregameActivity", "transitBox has passed. [CurrentPos : " + currentPos + " / Applied : " + toApply + "]");
+
+            this.resultBox.setCurrentPosition(toApply);
+
             if(!this.resultBox.isReplay()){
-                final int currentPos = StageSynchronizer.indexOf(this.stageBox);
-                final int toApply = currentPos == -1 ? 0 : currentPos;
                 this.resultBox.setContinuous(this.resultBox.getContinuous() + 1);
-                this.resultBox.setCurrentPosition(toApply);
+
+                Log.e("PregameActivity", "transitBox has passed. Replay Flag is not true. [CurrentPos : " + currentPos + " / Applied : " + toApply + "]");
             }
 
             this.resultBox.initForNewGame();
@@ -102,7 +109,7 @@ public class PregameActivity extends BaseActivity {
             this.chText.setVisibility(View.GONE);
         }
 
-        int displayLevel = isC ? this.resultBox.getContinuous() : this.resultBox.getCurrentPosition();
+        int displayLevel = isC ? this.resultBox.getContinuous() : this.resultBox.getCurrentPosition() + 1;
         this.levelText.setText("LEVEL " + displayLevel);
 
         playAnimation(isC);
