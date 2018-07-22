@@ -7,7 +7,6 @@ package kr.co.picklecode.crossmedia.hiddencatch.model;
 public class ResultBox {
 
     private StageBox stageBox;
-    private int continuous = 0;
     private int currentPosition = 0;
     private boolean isHintUsed = false;
     private boolean isHeartUsed = false;
@@ -23,7 +22,6 @@ public class ResultBox {
         this.isHintUsed = false;
         this.isHeartUsed = false;
         this.isLosed = false;
-        this.isChallenge = false;
         this.isReplay = false;
     }
 
@@ -39,7 +37,6 @@ public class ResultBox {
     public String toString() {
         return "ResultBox{" +
                 "stageBox=" + stageBox +
-                ", continuous=" + continuous +
                 ", currentPosition=" + currentPosition +
                 ", isHintUsed=" + isHintUsed +
                 ", isHeartUsed=" + isHeartUsed +
@@ -70,14 +67,6 @@ public class ResultBox {
 
     public void setStageBox(StageBox stageBox) {
         this.stageBox = stageBox;
-    }
-
-    public int getContinuous() {
-        return continuous;
-    }
-
-    public void setContinuous(int continuous) {
-        this.continuous = continuous;
     }
 
     public int getCurrentPosition() {

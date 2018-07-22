@@ -47,6 +47,7 @@ public class PauseActivity extends BaseActivity {
                 break;
             }
             case R.id.pmenu_re:{
+
                 break;
             }
             case R.id.pmenu_stage:{

@@ -166,14 +166,6 @@ public class GameActivity extends BaseActivity {
                 break;
             }
             case R.id.pause : {
-                /**
-                 * Test Unit Begin
-                 */
-                StageUtil.setPoint(5);
-                /**
-                 * End
-                 */
-
                 startActivityWithTransition(PauseActivity.class, R.anim.alpha_in, R.anim.alpha_out);
                 break;
             }
@@ -296,7 +288,7 @@ public class GameActivity extends BaseActivity {
         Log.e("GameActivity", "Game Finished : [Win : " + win + "]");
         this.resultBox.setLosed(!win);
         StageUtil.saveWinningInfo(this.stageBox.getId(), false);
-        StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+        StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
     }
 
     private void react(boolean isCorrect, AnswerBox answerBox){
@@ -314,4 +306,10 @@ public class GameActivity extends BaseActivity {
 
         initGame();
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivityWithTransition(PauseActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+    }
+
 }

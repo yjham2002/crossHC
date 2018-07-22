@@ -17,12 +17,15 @@ import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import java.io.File;
+import java.util.List;
+import java.util.Random;
 
 import bases.BaseActivity;
 import bases.Configs;
 import bases.Constants;
 import bases.SimpleCallback;
 import bases.utils.ToastAndExit;
+import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 import utils.PreferenceUtil;
@@ -84,6 +87,14 @@ public class MainActivity extends BaseActivity {
                 break;
             }
             case R.id.btn_cha:{
+                final List<StageBox> list = StageSynchronizer.getStageInstance();
+
+                if(list == null || list.size() == 0){
+                      showToast("게임 데이터가 존재하지 않습니다.");
+                }
+
+                final StageBox selectedStage = list.get(new Random().nextInt(list.size()));
+                StageUtil.sendAndFinish(this, selectedStage, PregameActivity.class, true);
                 break;
             }
             default: break;
@@ -105,6 +116,12 @@ public class MainActivity extends BaseActivity {
             startActivityForResult(new Intent(this, DownloadActivity.class), Constants.REQUEST.REQUEST_DOWNLOAD);
             overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        StageUtil.setContinuous(0);
     }
 
     @Override

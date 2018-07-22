@@ -30,6 +30,8 @@ import utils.PreferenceUtil;
 
 public class StageUtil {
 
+    private static int continuous = 0;
+
     private static final int MAX_HINT_COUNT = 99;
 
     private static final String KEY_STAGE = "KEY_INTERNAL_STAGE_INTENT";
@@ -95,8 +97,8 @@ public class StageUtil {
         activity.overridePendingTransition(enterAnim, exitAnim);
     }
 
-    public static void sendAndFinishWithTransition(Activity activity, ResultBox resultBox, Class toGo, int enterAnim, int exitAnim){
-        sendAndFinish(activity, resultBox, toGo);
+    public static void sendAndFinishWithTransition(Activity activity, ResultBox resultBox, Class toGo, int enterAnim, int exitAnim, boolean isChallenge){
+        sendAndFinish(activity, resultBox, toGo, isChallenge);
         activity.overridePendingTransition(enterAnim, exitAnim);
     }
 
@@ -231,4 +233,11 @@ public class StageUtil {
         return new HashMap<>();
     }
 
+    public static int getContinuous() {
+        return continuous;
+    }
+
+    public static void setContinuous(int continuous) {
+        StageUtil.continuous = continuous;
+    }
 }

@@ -72,7 +72,7 @@ public class PregameActivity extends BaseActivity {
         if(transitBox == null){
             Log.e("PregameActivity", "transitBox is null. Initializing Data.");
             this.resultBox = new ResultBox();
-            this.resultBox.setContinuous(1);
+            StageUtil.setContinuous(1);
             this.resultBox.setCurrentPosition(0);
         }else{
             this.resultBox = transitBox;
@@ -85,15 +85,14 @@ public class PregameActivity extends BaseActivity {
             this.resultBox.setCurrentPosition(toApply);
 
             if(!this.resultBox.isReplay()){
-                this.resultBox.setContinuous(this.resultBox.getContinuous() + 1);
-
-                Log.e("PregameActivity", "transitBox has passed. Replay Flag is not true. [CurrentPos : " + currentPos + " / Applied : " + toApply + "]");
+                StageUtil.setContinuous(StageUtil.getContinuous() + 1);
+                Log.e("PregameActivity", "transitBox has passed. Replay Flag is not true. [CurrentPos : " + currentPos + " / Applied : " + toApply + " / Continuous : " + StageUtil.getContinuous() + "]");
             }
 
             this.resultBox.initForNewGame();
         }
 
-        this.isC = false;
+        this.isC = this.resultBox.isChallenge();
 
         if(intent.getExtras().containsKey(Constants.INTENT_KEY.GAME_KEY)){
             if(intent.getExtras().getBoolean(Constants.INTENT_KEY.GAME_KEY)){
@@ -109,8 +108,11 @@ public class PregameActivity extends BaseActivity {
             this.chText.setVisibility(View.GONE);
         }
 
-        int displayLevel = isC ? this.resultBox.getContinuous() : this.resultBox.getCurrentPosition() + 1;
+        int displayLevel = this.isC ? StageUtil.getContinuous() : this.resultBox.getCurrentPosition() + 1;
         this.levelText.setText("LEVEL " + displayLevel);
+
+        this.resultBox.setChallenge(this.isC);
+        this.resultBox.setStageBox(this.stageBox);
 
         playAnimation(isC);
     }

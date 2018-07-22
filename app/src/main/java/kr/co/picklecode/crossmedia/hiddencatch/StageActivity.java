@@ -85,4 +85,10 @@ public class StageActivity extends BaseActivity {
 
         init();
     }
+
+    @Override
+    public void onBackPressed() {
+        finishAndStartActivity(MainActivity.class);
+    }
+
 }

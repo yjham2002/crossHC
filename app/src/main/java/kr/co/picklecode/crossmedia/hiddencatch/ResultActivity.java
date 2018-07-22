@@ -28,12 +28,16 @@ public class ResultActivity extends BaseActivity {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.r_exit : {
-                finishAndStartActivity(StageActivity.class);
+                if(this.resultBox.isChallenge()){
+                    finishAndStartActivity(MainActivity.class);
+                }else{
+                    finishAndStartActivity(StageActivity.class);
+                }
                 break;
             }
             case R.id.r_replay : {
                 this.resultBox.setReplay(true);
-                StageUtil.sendAndFinishWithTransition(this, this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+                StageUtil.sendAndFinishWithTransition(this, this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
                 break;
             }
             case R.id.r_next : {
@@ -56,7 +60,7 @@ public class ResultActivity extends BaseActivity {
                     new ToastAndExit(this, "스테이지 데이터가 올바르지 않아 게임을 종료합니다.").runWithLog("Stage Data is wrong.");
                 }
 
-                StageUtil.sendAndFinishWithTransition(this, this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out);
+                StageUtil.sendAndFinishWithTransition(this, this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
                 break;
             }
             default: break;
@@ -72,6 +76,7 @@ public class ResultActivity extends BaseActivity {
             this.btn_replay.setVisibility(View.GONE);
             if (this.resultBox.isChallenge()) { // On Challenge
                 this.result_anim_p.setVisibility(View.GONE);
+                this.reward_bottom.setVisibility(View.GONE);
                 final int rewarded = reactChallenge();
                 this.reward_text.setText("" + rewarded);
             } else { // On Normal
@@ -118,17 +123,19 @@ public class ResultActivity extends BaseActivity {
     }
 
     private int reactChallenge(){
+        Log.e("ResultActivity", "Challenge = isHintUsed : " + this.resultBox.isHintUsed() + " / isHeartUsed : " + this.resultBox.isHeartUsed());
+
         int reward;
-        if(this.resultBox.getCurrentPosition() < 5){
+        if(StageUtil.getContinuous() < 5){
             reward = 1;
             showResultImage(R.drawable.img_result_clear);
-        }else if(this.resultBox.getCurrentPosition() >= 5 && this.resultBox.getCurrentPosition() < 10){
+        }else if(StageUtil.getContinuous() >= 5 && StageUtil.getContinuous() < 10){
             reward = 5;
             showResultImage(R.drawable.img_result_good);
-        }else if(this.resultBox.getCurrentPosition() >= 10 && this.resultBox.getCurrentPosition() < 30){
+        }else if(StageUtil.getContinuous() >= 10 && StageUtil.getContinuous() < 30){
             reward = 15;
             showResultImage(R.drawable.img_result_verygood);
-        }else if(this.resultBox.getCurrentPosition() >= 30 && this.resultBox.getCurrentPosition() < 50){
+        }else if(StageUtil.getContinuous() >= 30 && StageUtil.getContinuous() < 50){
             reward = 35;
             showResultImage(R.drawable.img_result_amazing);
         }else{
@@ -143,6 +150,7 @@ public class ResultActivity extends BaseActivity {
 
     private void initData(){
         this.resultBox = StageUtil.executeResult(getIntent());
+
     }
 
     private void init(){
