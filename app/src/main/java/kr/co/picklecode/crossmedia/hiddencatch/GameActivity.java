@@ -155,7 +155,7 @@ public class GameActivity extends BaseActivity {
         hintView.animate()
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .translationX(coordX - (hintView.getWidth() / 2))
-                .translationY(coordY)
+                .translationY(coordY + (hintView.getHeight() / 2))
                 .setDuration(0);
 
         hintView.setVisibility(View.VISIBLE);
@@ -163,7 +163,7 @@ public class GameActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startAnimationWithIn(hintView, R.drawable.anim_frame_incorrect, 0);
+                startAnimationWithIn(hintView, R.drawable.anim_frame_hint, 0);
                 stopAnimationOf(hintView, SHOW_TIME);
             }
         }, 0);
