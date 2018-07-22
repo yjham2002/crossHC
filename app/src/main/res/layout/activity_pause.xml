@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/pmenu_con"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
         <LinearLayout
             android:layout_marginTop="30dp"
             android:id="@+id/pmenu_re"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
         <LinearLayout
             android:layout_marginTop="30dp"
             android:id="@+id/pmenu_stage"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -80,12 +80,13 @@
         <LinearLayout
             android:layout_marginTop="30dp"
             android:id="@+id/pmenu_bgm"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/bgm_stat"
                 android:src="@drawable/icon_hour_glass"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
@@ -101,12 +102,13 @@
         <LinearLayout
             android:layout_marginTop="30dp"
             android:id="@+id/pmenu_eff"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/eff_stat"
                 android:src="@drawable/icon_hour_glass"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />

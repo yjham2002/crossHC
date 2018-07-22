@@ -12,7 +12,9 @@ import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import java.io.File;
 
@@ -22,11 +24,30 @@ import bases.Constants;
 import bases.SimpleCallback;
 import bases.utils.ToastAndExit;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
+import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 import utils.PreferenceUtil;
 
 public class MainActivity extends BaseActivity {
 
-    private View btn_back, btn_reco, btn_bgm, btn_eff, btn_play, btn_cha;
+    private View btn_back, btn_reco, btn_play, btn_cha;
+    private ToggleButton btn_bgm, btn_eff;
+
+    private ToggleButton.OnCheckedChangeListener toggleHandler = new ToggleButton.OnCheckedChangeListener(){
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            switch (compoundButton.getId()){
+                case R.id.btn_bgm:{
+                    StageUtil.setBGM(b);
+                    break;
+                }
+                case R.id.btn_eff:{
+                    StageUtil.setEffect(b);
+                    break;
+                }
+                default: break;
+            }
+        }
+    };
 
     public void init(){
         this.btn_back = findViewById(R.id.btn_back);
@@ -35,6 +56,16 @@ public class MainActivity extends BaseActivity {
         this.btn_eff = findViewById(R.id.btn_eff);
         this.btn_play = findViewById(R.id.btn_play);
         this.btn_cha = findViewById(R.id.btn_cha);
+
+        syncToggles();
+
+        this.btn_bgm.setOnCheckedChangeListener(toggleHandler);
+        this.btn_eff.setOnCheckedChangeListener(toggleHandler);
+    }
+
+    private void syncToggles(){
+        this.btn_bgm.setChecked(StageUtil.isBgmOn());
+        this.btn_eff.setChecked(StageUtil.isEffectOn());
     }
 
     @Override
@@ -46,12 +77,6 @@ public class MainActivity extends BaseActivity {
             }
             case R.id.btn_reco:{
                 startActivityWithTransition(RecommendActivity.class, R.anim.alpha_in, R.anim.alpha_out);
-                break;
-            }
-            case R.id.btn_bgm:{
-                break;
-            }
-            case R.id.btn_eff:{
                 break;
             }
             case R.id.btn_play:{
@@ -66,7 +91,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void attachListenerAndSetEnabled(){
-        setClick(btn_back, btn_reco, btn_bgm, btn_eff, btn_play, btn_cha);
+        setClick(btn_back, btn_reco, btn_play, btn_cha);
     }
 
     private void canProceed(){

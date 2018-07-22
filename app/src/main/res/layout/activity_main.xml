@@ -30,20 +30,22 @@
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <Button
+            <ToggleButton
                 android:id="@+id/btn_bgm"
-                android:text="배경음"
-                android:layout_gravity="left|center_vertical"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <Button
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:textOff=""
+                android:textOn=""
+                android:background="@drawable/btn_toggle_bgm"/>
+            <ToggleButton
                 android:id="@+id/btn_eff"
-                android:text="효과음"
-                android:layout_gravity="left|center_vertical"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:textOff=""
+                android:textOn=""
+                android:background="@drawable/btn_toggle_eff"/>
         </LinearLayout>
     </FrameLayout>
 

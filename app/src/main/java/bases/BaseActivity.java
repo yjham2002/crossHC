@@ -134,6 +134,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         finish();
     }
 
+    public void finishWithTransition(int enterAnim, int exitAnim){
+        finish();
+        overridePendingTransition(enterAnim, exitAnim);
+    }
+
     protected boolean onPermissionActivityResult(int requestCode){
         if (requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
