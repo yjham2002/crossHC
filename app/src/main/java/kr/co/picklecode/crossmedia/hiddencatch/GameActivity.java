@@ -20,7 +20,9 @@ import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.Vector;
 
 import bases.BaseActivity;
 import bases.Constants;
@@ -48,7 +50,7 @@ public class GameActivity extends BaseActivity {
 
     private TextView hintText, scoreText, scoreTextT;
     private View btn_pause, hintBack;
-    private ImageView animView;
+    private ImageView animView, hintView;
     private CircleProgress life;
     private TouchableImageView imgOrigin, imgQues;
     private MediaPlayer mediaPlayer;
@@ -73,6 +75,7 @@ public class GameActivity extends BaseActivity {
     private void initGame(){
         this.mainWrapper = findViewById(R.id.mainWrapper);
         this.animView = findViewById(R.id.animView);
+        this.hintView = findViewById(R.id.hintView);
         this.hintText = findViewById(R.id.hint);
         this.hintBack = findViewById(R.id.hintBack);
         this.btn_pause = findViewById(R.id.pause);
@@ -126,9 +129,46 @@ public class GameActivity extends BaseActivity {
         updateViewsAndCheck();
     }
 
+    private Handler hideHintHandler = new Handler();
+    private Runnable hideHintRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hintView.setVisibility(View.INVISIBLE);
+        }
+    };
+    private static final long SHOW_HINT_TIME = 1500;
+
     private void showHint(){
+        if(answered.size() == answerBoxList.size()) return;
+
         Log.e("GameActivity", "Hint Showed");
         this.resultBox.setHintUsed(true);
+
+        List<AnswerBox> notAnswered = new Vector<>();
+        for(AnswerBox ansBox : this.answerBoxList) if(!this.answered.contains(ansBox)) notAnswered.add(ansBox);
+        AnswerBox toShow = notAnswered.get(new Random().nextInt(notAnswered.size()));
+
+        final View criteria = this.imgQues;
+        final float coordX = (float)(criteria.getWidth() * toShow.getCoordX()) + criteria.getLeft();
+        final float coordY = (float)(criteria.getHeight() * toShow.getCoordY()) + criteria.getTop();
+
+        hintView.animate()
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .translationX(coordX - (hintView.getWidth() / 2))
+                .translationY(coordY)
+                .setDuration(0);
+
+        hintView.setVisibility(View.VISIBLE);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startAnimationWithIn(hintView, R.drawable.anim_frame_incorrect, 0);
+                stopAnimationOf(hintView, SHOW_TIME);
+            }
+        }, 0);
+
+        hideHintHandler.postDelayed(hideHintRunnable, SHOW_HINT_TIME);
     }
 
     private Handler hideHandler = new Handler();

@@ -171,4 +171,10 @@
         android:layout_width="@dimen/mark_size"
         android:layout_height="@dimen/mark_size" />
 
+    <ImageView
+        android:id="@+id/hintView"
+        android:visibility="invisible"
+        android:layout_width="@dimen/mark_hint_size"
+        android:layout_height="@dimen/mark_hint_size" />
+
 </FrameLayout>
