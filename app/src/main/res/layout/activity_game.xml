@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:id="@+id/mainWrapper"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context="kr.co.picklecode.crossmedia.hiddencatch.GameActivity">
@@ -167,7 +168,7 @@
     <ImageView
         android:id="@+id/animView"
         android:visibility="invisible"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="@dimen/mark_size"
+        android:layout_height="@dimen/mark_size" />
 
 </FrameLayout>

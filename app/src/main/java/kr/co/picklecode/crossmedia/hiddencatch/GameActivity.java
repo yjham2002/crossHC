@@ -6,18 +6,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.CircleProgress;
-import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +36,8 @@ public class GameActivity extends BaseActivity {
 
     private static final int MAX_LIFE = 5;
     private int currentLife;
+
+    private FrameLayout mainWrapper;
 
     private StageBox stageBox;
     private QuestionBox questionBox;
@@ -70,6 +71,7 @@ public class GameActivity extends BaseActivity {
     };
 
     private void initGame(){
+        this.mainWrapper = findViewById(R.id.mainWrapper);
         this.animView = findViewById(R.id.animView);
         this.hintText = findViewById(R.id.hint);
         this.hintBack = findViewById(R.id.hintBack);
@@ -136,10 +138,10 @@ public class GameActivity extends BaseActivity {
             animView.setVisibility(View.INVISIBLE);
         }
     };
+    private static final long SHOW_TIME = 1500;
 
     private void displayAnim(final int id, float x, float y){
         hideHandler.removeCallbacks(hideRunnable);
-        final long showTime = 1500;
 
         animView.animate()
                 .setInterpolator(new AccelerateDecelerateInterpolator())
@@ -153,11 +155,11 @@ public class GameActivity extends BaseActivity {
             @Override
             public void run() {
                 startAnimationWithIn(animView, id, 0);
-                stopAnimationOf(animView, showTime);
+                stopAnimationOf(animView, SHOW_TIME);
             }
         }, 0);
 
-        hideHandler.postDelayed(hideRunnable, showTime);
+        hideHandler.postDelayed(hideRunnable, SHOW_TIME);
     }
 
     @Override
@@ -231,14 +233,14 @@ public class GameActivity extends BaseActivity {
                 // Do nothing
             }else{
                 displayAnim(R.drawable.anim_frame_correct, screenX, screenY);
-                react(true, min);
+                react(true, screenX, screenY);
                 answered.add(min);
             }
         }else{ // On Failure
             this.resultBox.setHeartUsed(true);
             if(this.currentLife > 0) this.currentLife--;
             displayAnim(R.drawable.anim_frame_incorrect, screenX, screenY);
-            react(false, min);
+            react(false, screenX, screenY);
         }
 
         updateViewsAndCheck();
@@ -302,12 +304,30 @@ public class GameActivity extends BaseActivity {
         StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
     }
 
-    private void react(boolean isCorrect, AnswerBox answerBox){
+    private Handler drawHandler = new Handler();
+
+    private void react(boolean isCorrect, final float x, final float y){
         if(isCorrect){
+            drawHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    drawAnsweredPoint(x, y);
+                }
+            }, SHOW_TIME);
             if(StageUtil.isEffectOn()) playSound(R.raw.correct);
         }else{
             if(StageUtil.isEffectOn()) playSound(R.raw.beep);
         }
+    }
+
+    private void drawAnsweredPoint(float x, float y){
+        final int size = getResources().getDimensionPixelSize(R.dimen.mark_size);
+        ImageView iv = new ImageView(getApplicationContext());
+        iv.setImageDrawable(getResources().getDrawable(R.drawable.anim_correct_01));
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(size, size);
+        iv.setLayoutParams(lp);
+        mainWrapper.addView(iv);
+        iv.animate().translationX(x - (size / 2)).translationY(y + size).setDuration(0);
     }
 
     @Override
