@@ -308,6 +308,12 @@ public class GameActivity extends BaseActivity {
 
     private void react(boolean isCorrect, final float x, final float y){
         if(isCorrect){
+            if(y < imgQues.getTop()){ // On Upper one touched
+                drawAnsweredPoint(x, y + imgQues.getHeight());
+            }else{ // On lower one touched
+                drawAnsweredPoint(x, y - imgQues.getHeight());
+            }
+
             drawHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
