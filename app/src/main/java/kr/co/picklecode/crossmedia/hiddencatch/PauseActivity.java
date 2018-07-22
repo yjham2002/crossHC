@@ -1,5 +1,6 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import bases.BaseActivity;
+import bases.Constants;
 import kr.co.picklecode.crossmedia.hiddencatch.util.AnimUtil;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
@@ -47,7 +49,8 @@ public class PauseActivity extends BaseActivity {
                 break;
             }
             case R.id.pmenu_re:{
-
+                sendBroadcast(new Intent(Constants.INTENT_FILTER.FILTER_REPLAY));
+                finishWithTransition(R.anim.alpha_in, R.anim.alpha_out);
                 break;
             }
             case R.id.pmenu_stage:{

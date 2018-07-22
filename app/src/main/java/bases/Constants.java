@@ -10,6 +10,10 @@ public class Constants {
         String GAME_KEY = "isChallenge";
     }
 
+    public interface INTENT_FILTER{
+        String FILTER_REPLAY = "kr.co.picklecode.crossmedia.hiddencatch.FILTER_REPLAY";
+    }
+
     public interface PREFERENCE{
         String GAME_STAGE_OBJECT = "kr.co.picklecode.crossmedia.hiddencatch.STAGE_OBJECT";
         String GAME_UPDATE_CHECK = "kr.co.picklecode.crossmedia.hiddencatch.UPDATE_CHECK";

@@ -1,6 +1,9 @@
 package kr.co.picklecode.crossmedia.hiddencatch;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +60,14 @@ public class GameActivity extends BaseActivity {
         mediaPlayer = MediaPlayer.create(this, id);
         mediaPlayer.start();
     }
+
+    private BroadcastReceiver replayReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            GameActivity.this.resultBox.setReplay(true);
+            StageUtil.sendAndFinishWithTransition(GameActivity.this, GameActivity.this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, GameActivity.this.resultBox.isChallenge());
+        }
+    };
 
     private void initGame(){
         this.animView = findViewById(R.id.animView);
@@ -304,7 +315,15 @@ public class GameActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        registerReceiver(replayReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REPLAY));
+
         initGame();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(replayReceiver);
     }
 
     @Override
