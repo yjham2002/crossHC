@@ -23,7 +23,7 @@ public class ResultActivity extends BaseActivity {
 
     private ResultBox resultBox;
 
-    private ImageView progress_view_01, progress_view_02, progress_view_03;
+    private ImageView progress_view_01, progress_view_02, progress_view_03, img_nexttime;
     private ImageView result_img, result_anim;
     private View result_anim_p, progress_sp_1, progress_sp_2;
     private View reward_center, reward_bottom, btn_exit, btn_replay, btn_next;
@@ -77,6 +77,7 @@ public class ResultActivity extends BaseActivity {
 
     private void setModeVisibilityAndSet(){
         if(this.resultBox.isLosed()){ // Stage Failure
+            this.img_nexttime.setVisibility(View.VISIBLE);
             this.reward_center.setVisibility(View.GONE);
             this.reward_bottom.setVisibility(View.GONE);
             this.result_anim_p.setVisibility(View.GONE);
@@ -181,6 +182,8 @@ public class ResultActivity extends BaseActivity {
 
     private void init(){
         initData();
+
+        this.img_nexttime = findViewById(R.id.img_nexttime);
 
         this.rt_heart = findViewById(R.id.r_heart_t);
         this.rt_hint = findViewById(R.id.r_hint_t);

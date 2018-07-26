@@ -36,6 +36,13 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/img_nexttime"
+                android:layout_gravity="bottom"
+                android:src="@drawable/img_result_nexttime"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
             <LinearLayout
                 android:id="@+id/result_anim_p"
                 android:orientation="vertical"
