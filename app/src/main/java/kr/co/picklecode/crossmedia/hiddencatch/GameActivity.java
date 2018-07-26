@@ -117,6 +117,8 @@ public class GameActivity extends BaseActivity {
         this.life.setProgress(lifeRatio);
 
         updateViewsAndCheck();
+
+        playSoundRandomWithin(PlayType.BGM, R.raw.bgm_01, R.raw.bgm_02, R.raw.bgm_03, R.raw.bgm_04, R.raw.bgm_05);
     }
 
     private Handler hideHintHandler = new Handler();
@@ -392,6 +394,7 @@ public class GameActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(replayReceiver);
+        stopSound(PlayType.BGM);
     }
 
     @Override
