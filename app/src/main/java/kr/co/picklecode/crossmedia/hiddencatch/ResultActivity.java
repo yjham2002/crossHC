@@ -13,6 +13,7 @@ import bases.BaseActivity;
 import bases.utils.ToastAndExit;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
+import kr.co.picklecode.crossmedia.hiddencatch.util.AnimUtil;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
@@ -20,9 +21,11 @@ public class ResultActivity extends BaseActivity {
 
     private ResultBox resultBox;
 
-    private ImageView result_img, result_anim, result_anim_p;
+    private ImageView progress_view_01, progress_view_02, progress_view_03;
+    private ImageView result_img, result_anim;
+    private View result_anim_p, progress_sp_1, progress_sp_2;
     private View reward_center, reward_bottom, btn_exit, btn_replay, btn_next;
-    private TextView reward_text, reward_text_bottom;
+    private TextView reward_text, reward_text_bottom, rt_hint, rt_heart;
 
     @Override
     public void onClick(View v){
@@ -71,6 +74,7 @@ public class ResultActivity extends BaseActivity {
         if(this.resultBox.isLosed()){ // Stage Failure
             this.reward_center.setVisibility(View.GONE);
             this.reward_bottom.setVisibility(View.GONE);
+            this.result_anim_p.setVisibility(View.GONE);
             showResultImage(R.drawable.img_result_lose);
         }else { // Stage Clear
             this.btn_replay.setVisibility(View.GONE);
@@ -108,14 +112,28 @@ public class ResultActivity extends BaseActivity {
         showNormalAnimation();
     }
 
-    // TODO
     private void showNormalProgress(){
-
+        if(!this.resultBox.isLosed()){
+            this.progress_view_01.setImageDrawable(getResources().getDrawable(R.drawable.img_reward_clear));
+            if(!this.resultBox.isHeartUsed()){
+                this.progress_view_02.setImageDrawable(getResources().getDrawable(R.drawable.img_reward_heart));
+                this.rt_heart.setTextColor(getResources().getColor(R.color.white));
+            }
+            if(!this.resultBox.isHintUsed()){
+                this.progress_view_03.setImageDrawable(getResources().getDrawable(R.drawable.img_reward_hint));
+                this.rt_hint.setTextColor(getResources().getColor(R.color.white));
+            }
+        }
     }
 
-    // TODO
+    // TODO - Topper Animation above AnimUtil Statement
     private void showNormalAnimation(){
-
+        AnimUtil.playSequential(AnimUtil.Anim.FADE_IN, 600, 200,
+                this.progress_view_01,
+                this.progress_sp_1,
+                this.progress_view_02,
+                this.progress_sp_2,
+                this.progress_view_03);
     }
 
     private void showResultImage(int imageId){
@@ -128,18 +146,18 @@ public class ResultActivity extends BaseActivity {
         int reward;
         if(StageUtil.getContinuous() < 5){
             reward = 1;
-            showResultImage(R.drawable.img_result_clear);
+            showResultImage(R.drawable.img_result_soso);
         }else if(StageUtil.getContinuous() >= 5 && StageUtil.getContinuous() < 10){
-            reward = 5;
+            reward = 3;
             showResultImage(R.drawable.img_result_good);
         }else if(StageUtil.getContinuous() >= 10 && StageUtil.getContinuous() < 30){
-            reward = 15;
+            reward = 5;
             showResultImage(R.drawable.img_result_verygood);
         }else if(StageUtil.getContinuous() >= 30 && StageUtil.getContinuous() < 50){
-            reward = 35;
+            reward = 15;
             showResultImage(R.drawable.img_result_amazing);
         }else{
-            reward = 60;
+            reward = 30;
             showResultImage(R.drawable.img_result_fantastic);
         }
 
@@ -155,6 +173,16 @@ public class ResultActivity extends BaseActivity {
 
     private void init(){
         initData();
+
+        this.rt_heart = findViewById(R.id.r_heart_t);
+        this.rt_hint = findViewById(R.id.r_hint_t);
+
+        this.progress_sp_1 = findViewById(R.id.progress_sp_1);
+        this.progress_sp_2 = findViewById(R.id.progress_sp_2);
+
+        this.progress_view_01 = findViewById(R.id.progress_01);
+        this.progress_view_02 = findViewById(R.id.progress_02);
+        this.progress_view_03 = findViewById(R.id.progress_03);
 
         this.result_img = findViewById(R.id.result_img);
         this.result_anim = findViewById(R.id.result_anim);

@@ -109,7 +109,8 @@ public class PregameActivity extends BaseActivity {
         }
 
         int displayLevel = this.isC ? StageUtil.getContinuous() : this.resultBox.getCurrentPosition() + 1;
-        this.levelText.setText("LEVEL " + displayLevel);
+        String displayText = this.isC ? "STAGE " : "LEVEL ";
+        this.levelText.setText(displayText + displayLevel);
 
         this.resultBox.setChallenge(this.isC);
         this.resultBox.setStageBox(this.stageBox);
