@@ -191,7 +191,7 @@ public class StageUtil {
         return "stage-" + stageId;
     }
 
-    public static void saveWinningInfo(int stageNo, boolean clearData){
+    public static void saveWinningInfo(int stageNo, int score, boolean clearData){
         final String stageId = genKeyForWinInfo(stageNo);
 
         final HashMap<String, Integer> map;
@@ -199,14 +199,7 @@ public class StageUtil {
             map = new HashMap<>();
         }else {
             map = getWinningInfo();
-            if (map.containsKey(stageId)) {
-                map.put(stageId, map.get(stageId) + 1);
-                Log.e("StageGrid", map.get(stageId) + "");
-            }
-            else {
-                map.put(stageId, 1);
-                Log.e("StageGrid", map.get(stageId) + "");
-            }
+            map.put(stageId, score);
         }
 
         final ObjectMapper objectMapper = new ObjectMapper();

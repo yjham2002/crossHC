@@ -5,31 +5,43 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
-
-    <FrameLayout
-        android:layout_margin="20dp"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:layout_margin="7dp"
+        android:background="@drawable/rounded_rect_thin_gray_no_border"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <FrameLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_above="@id/level"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_hour_glass"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/stageId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:lines="1"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white" />
+        </FrameLayout>
         <ImageView
+            android:layout_marginBottom="10dp"
             android:id="@+id/level"
-            android:src="@drawable/icon_hour_glass"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
-
-        <TextView
-            android:id="@+id/stageId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:lines="1"
-            android:textStyle="bold"
-            android:textSize="30dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="@color/white" />
-    </FrameLayout>
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/img_star_0"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+    </RelativeLayout>
 
 </kr.co.picklecode.crossmedia.hiddencatch.view.MyLinearLayout>

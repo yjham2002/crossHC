@@ -343,7 +343,13 @@ public class GameActivity extends BaseActivity {
     private void finishGame(boolean win){
         Log.e("GameActivity", "Game Finished : [Win : " + win + "]");
         this.resultBox.setLosed(!win);
-        StageUtil.saveWinningInfo(this.stageBox.getId(), false);
+        if(win) {
+            int score = 0;
+            if(this.resultBox.isHintUsed() && this.resultBox.isHeartUsed()) score = 1;
+            else if(this.resultBox.isHintUsed() || this.resultBox.isHeartUsed()) score = 2;
+            else score = 3;
+            StageUtil.saveWinningInfo(this.stageBox.getId(), score, false);
+        }
         StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
     }
 

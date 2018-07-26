@@ -125,6 +125,7 @@ public class DownloadActivity extends BaseActivity {
     private void requestDownload(File dir, String url, String displayText, String fileName){
         String actualUrl = url;
         if(!actualUrl.startsWith("http")) actualUrl = Configs.BASE_URL + Configs.BASE_IMG_POSTFIX + actualUrl;
+        Log.e("DownloadUrl", actualUrl);
 
         Uri downloadUri = Uri.parse(actualUrl);
         DownloadManager.Request request = new DownloadManager.Request(downloadUri);

@@ -66,9 +66,17 @@ public class StageGridAdapter extends BaseAdapter {
 
         if(winInfo.containsKey(StageUtil.genKeyForWinInfo(stageBox.getId()))){
             final int count = winInfo.get(StageUtil.genKeyForWinInfo(stageBox.getId()));
-            hostview.level.setVisibility(View.VISIBLE);
+            if(count == 0){
+                hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_0_s));
+            }else if(count == 1){
+                hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_1_s));
+            }else if(count == 2){
+                hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_2_s));
+            }else if(count >= 3){
+                hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_3_s));
+            }
         }else{
-            hostview.level.setVisibility(View.INVISIBLE);
+            hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_0_s));
         }
 
         hostview.stageId.setText((arg0 + 1) + "");
