@@ -78,6 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     mediaPlayerBgm.release();
                 }
                 mediaPlayerBgm = MediaPlayer.create(this, id);
+                mediaPlayerBgm.setLooping(true);
                 mediaPlayerBgm.start();
                 break;
             }
@@ -88,6 +89,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     mediaPlayer.release();
                 }
                 mediaPlayer = MediaPlayer.create(this, id);
+                mediaPlayer.setLooping(false);
                 mediaPlayer.start();
                 break;
             }
