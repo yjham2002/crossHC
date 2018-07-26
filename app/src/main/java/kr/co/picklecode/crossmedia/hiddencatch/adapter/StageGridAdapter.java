@@ -1,6 +1,7 @@
 package kr.co.picklecode.crossmedia.hiddencatch.adapter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +10,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import bases.Configs;
+import bases.imageTransform.RoundedTransform;
 import kr.co.picklecode.crossmedia.hiddencatch.R;
+import kr.co.picklecode.crossmedia.hiddencatch.StageActivity;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
+import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
 public class StageGridAdapter extends BaseAdapter {
@@ -51,13 +59,14 @@ public class StageGridAdapter extends BaseAdapter {
 
         HostView hostview;
         TextView stageId;
-        ImageView level;
+        ImageView level, clearImg;
 
         if (arg1 == null) {
             hostview = new HostView();
             arg1 = LayoutInflater.from(context).inflate(R.layout.item_grid_stage, null, true);
             hostview.stageId = arg1.findViewById(R.id.stageId);
             hostview.level = arg1.findViewById(R.id.level);
+            hostview.clearImg = arg1.findViewById(R.id.clearImg);
 
             arg1.setTag(hostview);
         } else {
@@ -66,7 +75,24 @@ public class StageGridAdapter extends BaseAdapter {
 
         if(winInfo.containsKey(StageUtil.genKeyForWinInfo(stageBox.getId()))){
             final int count = winInfo.get(StageUtil.genKeyForWinInfo(stageBox.getId()));
+
+            if(count > 0){
+                hostview.stageId.setVisibility(View.INVISIBLE);
+                if(stageBox.getOriginalPath() != null && !stageBox.getOriginalPath().trim().equals("")){
+                    final File dir = new File(Environment.getExternalStorageDirectory() + File.separator + Configs.DOWNLOAD_DIR + File.separator + stageBox.makePath());
+                    Picasso
+                            .get()
+                            .load(dir)
+                            .centerCrop()
+                            .resize(150, 90)
+                            .placeholder(R.drawable.icon_hour_glass)
+                            .transform(new RoundedTransform(10, 0))
+                            .into(hostview.clearImg);
+                }
+            }
+
             if(count == 0){
+                hostview.clearImg.setVisibility(View.INVISIBLE);
                 hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_0_s));
             }else if(count == 1){
                 hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_1_s));
@@ -76,6 +102,7 @@ public class StageGridAdapter extends BaseAdapter {
                 hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_3_s));
             }
         }else{
+            hostview.clearImg.setVisibility(View.INVISIBLE);
             hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_0_s));
         }
 
@@ -91,7 +118,7 @@ public class StageGridAdapter extends BaseAdapter {
     }
 
     private class HostView {
-        ImageView level;
+        ImageView level, clearImg;
         TextView stageId;
     }
 

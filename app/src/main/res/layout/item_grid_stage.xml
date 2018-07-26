@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical">
     <RelativeLayout
-        android:layout_margin="7dp"
+        android:layout_margin="5dp"
         android:background="@drawable/rounded_rect_thin_gray_no_border"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +19,8 @@
             <ImageView
                 android:scaleType="centerCrop"
                 android:src="@drawable/icon_hour_glass"
-                android:layout_margin="20dp"
+                android:layout_margin="3dp"
+                android:id="@+id/clearImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             <TextView
@@ -39,7 +40,7 @@
             android:layout_marginBottom="10dp"
             android:id="@+id/level"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/img_star_0"
+            android:src="@drawable/img_star_0_s"
             android:layout_width="match_parent"
             android:layout_height="20dp" />
     </RelativeLayout>

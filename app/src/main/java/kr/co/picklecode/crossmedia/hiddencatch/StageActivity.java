@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,12 +24,16 @@ import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 public class StageActivity extends BaseActivity {
 
     private GridView gridView;
-    private ImageView preImg, startBtn;
+    private TextView currentStage;
+    private ImageView preImg, startBtn, clearLevel;
     private StageGridAdapter stageGridAdapter;
     private View btn_back, progress;
     private StageBox selectedStage = null;
 
     public void init(){
+        this.currentStage = findViewById(R.id.currentStage);
+        this.clearLevel = findViewById(R.id.clearLevel);
+
         this.btn_back = findViewById(R.id.left_back);
         this.progress = findViewById(R.id.progress);
         this.preImg = findViewById(R.id.preImg);
@@ -41,6 +46,8 @@ public class StageActivity extends BaseActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 StageBox stageBox = StageSynchronizer.getStageInstance().get(position);
+                final int count = StageUtil.getWinningInfo().get(StageUtil.genKeyForWinInfo(stageBox.getId()));
+
                 StageActivity.this.selectedStage = stageBox;
                 if(stageBox.getOriginalPath() != null && !stageBox.getOriginalPath().trim().equals("")){
                     final File dir = new File(Environment.getExternalStorageDirectory() + File.separator + Configs.DOWNLOAD_DIR + File.separator + stageBox.makePath());
@@ -51,6 +58,19 @@ public class StageActivity extends BaseActivity {
                             .placeholder(R.drawable.icon_hour_glass)
                             .into(preImg);
                 }
+
+                currentStage.setText("STAGE " + (position + 1));
+
+                if(count == 0){
+                    clearLevel.setImageDrawable(getResources().getDrawable(R.drawable.img_star_0));
+                }else if(count == 1){
+                    clearLevel.setImageDrawable(getResources().getDrawable(R.drawable.img_star_1));
+                }else if(count == 2){
+                    clearLevel.setImageDrawable(getResources().getDrawable(R.drawable.img_star_2));
+                }else if(count >= 3){
+                    clearLevel.setImageDrawable(getResources().getDrawable(R.drawable.img_star_3));
+                }
+
             }
         });
 
