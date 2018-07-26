@@ -308,7 +308,8 @@ public class GameActivity extends BaseActivity {
         refeshProgress();
         this.scoreText.setText("" + answered.size());
         this.scoreTextT.setText("" + answerBoxList.size());
-        this.hintText.setText("" + StageUtil.getPoint());
+        if(StageUtil.getPoint() > 0) this.hintText.setText("" + StageUtil.getPoint());
+        else this.hintText.setText("+");
 
         judgeHandler.postDelayed(judgeRunnable, 2000);
     }

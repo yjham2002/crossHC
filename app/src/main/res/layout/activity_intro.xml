@@ -9,10 +9,11 @@
     tools:context="kr.co.picklecode.crossmedia.hiddencatch.IntroActivity">
 
     <ImageView
-        android:src="@drawable/common_full_open_on_phone"
+        android:id="@+id/mainLogo"
+        android:src="@drawable/img_main"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="50dp"
         />
     <ProgressBar
         android:layout_width="30dp"

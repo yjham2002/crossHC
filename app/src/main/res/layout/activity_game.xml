@@ -27,11 +27,11 @@
                     <ImageView
                         android:id="@+id/scoreBack"
                         android:layout_gravity="center"
-                        android:src="@color/red"
+                        android:src="@drawable/img_play_bg"
                         android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size" />
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="@dimen/nav_life_size"
+                        android:layout_height="@dimen/nav_life_size" />
                     <LinearLayout
                         android:gravity="bottom"
                         android:layout_gravity="center"
@@ -43,14 +43,12 @@
                             android:text="0"
                             android:gravity="center"
                             android:textColor="@color/white"
-                            android:textSize="25dp"
+                            android:textSize="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:id="@+id/separator"
                             android:text="/"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
                             android:gravity="center"
                             android:textColor="@color/white"
                             android:textSize="22dp"
@@ -61,7 +59,7 @@
                             android:text="0"
                             android:gravity="center"
                             android:textColor="@color/white"
-                            android:textSize="18dp"
+                            android:textSize="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -73,19 +71,22 @@
                     <ImageView
                         android:id="@+id/hintBack"
                         android:layout_gravity="center"
-                        android:src="@color/red"
+                        android:src="@drawable/img_play_hint"
                         android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size" />
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="@dimen/nav_life_size"
+                        android:layout_height="@dimen/nav_life_size" />
                     <TextView
                         android:id="@+id/hint"
-                        android:layout_gravity="center"
-                        android:text="0/5"
+                        android:layout_gravity="bottom|right"
+                        android:text="0"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginRight="2dp"
+                        android:textSize="10dp"
                         android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size" />
+                        android:textColor="@color/colorPrimary"
+                        android:layout_width="15dp"
+                        android:layout_height="wrap_content" />
                 </FrameLayout>
             </LinearLayout>
             <LinearLayout
@@ -96,27 +97,32 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                     <com.github.lzyzsd.circleprogress.CircleProgress
-                        android:layout_marginLeft="50dp"
                         android:id="@+id/life"
-                        android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        custom:circle_finished_color="@color/red"
+                        custom:circle_unfinished_color="@color/white"
                         custom:circle_text_color="@color/transparent"
                         />
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/img_play_life"
+                        android:layout_height="@dimen/nav_life_size"
+                        android:layout_width="@dimen/nav_life_size" />
                 </FrameLayout>
                 <FrameLayout
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/pause"
                         android:layout_gravity="center"
-                        android:src="@color/red"
+                        android:src="@drawable/img_play_pause"
                         android:clickable="true"
-                        android:background="?attr/selectableItemBackground"
-                        android:layout_width="@dimen/nav_icon_size"
-                        android:layout_height="@dimen/nav_icon_size" />
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="@dimen/nav_life_size"
+                        android:layout_height="@dimen/nav_life_size" />
                 </FrameLayout>
             </LinearLayout>
         </FrameLayout>

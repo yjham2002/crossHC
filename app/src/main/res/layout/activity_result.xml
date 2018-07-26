@@ -83,7 +83,7 @@
                 android:layout_gravity="left|center_vertical"
                 android:id="@+id/r_exit"
                 android:clickable="true"
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_result_home"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="70dp"
                 android:layout_height="70dp" />
@@ -91,7 +91,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/r_replay"
                 android:clickable="true"
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_result_replay"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="70dp"
                 android:layout_height="70dp" />
@@ -99,7 +99,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:id="@+id/r_next"
                 android:clickable="true"
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_result_next"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="70dp"
                 android:layout_height="70dp" />
@@ -116,10 +116,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:src="@drawable/btn_result_reward_normal"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:visibility="gone"
                     android:src="@drawable/icon_hour_glass"
                     android:layout_width="25dp"
                     android:layout_height="25dp" />
                 <TextView
+                    android:visibility="gone"
                     android:textSize="20dp"
                     android:textColor="@color/white"
                     android:text="X"
@@ -128,6 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/reward_text_b"
                     android:textSize="20dp"
                     android:textColor="@color/white"

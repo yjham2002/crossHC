@@ -37,8 +37,8 @@ public class PauseActivity extends BaseActivity {
     }
 
     private void syncToggles(){
-        this.stat_bgm.setImageDrawable(getResources().getDrawable(StageUtil.isBgmOn() ? R.drawable.toggle_bgm_on : R.drawable.toggle_bgm_off));
-        this.stat_eff.setImageDrawable(getResources().getDrawable(StageUtil.isEffectOn() ? R.drawable.toggle_eff_on : R.drawable.toggle_eff_off));
+        this.stat_bgm.setImageDrawable(getResources().getDrawable(StageUtil.isBgmOn() ? R.drawable.btn_toggle_bgm_on : R.drawable.btn_toggle_bgm_off));
+        this.stat_eff.setImageDrawable(getResources().getDrawable(StageUtil.isEffectOn() ? R.drawable.btn_toggle_eff_on : R.drawable.btn_toggle_eff_off));
     }
 
     @Override

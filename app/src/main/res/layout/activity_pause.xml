@@ -23,14 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_continue"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
                 android:textSize="30dp"
-                android:text="계속하기"
+                android:text="CONTINUE"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -44,14 +44,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_replay"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
                 android:textSize="30dp"
-                android:text="다시하기"
+                android:text="RE GAME"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -65,14 +65,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_exit"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
                 android:textSize="30dp"
-                android:text="스테이지 이동"
+                android:text="EXIT"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -87,14 +87,14 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/bgm_stat"
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_toggle_bgm_on"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
                 android:textSize="30dp"
-                android:text="배경음 ON/OFF"
+                android:text="MUSIC"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -109,14 +109,14 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/eff_stat"
-                android:src="@drawable/icon_hour_glass"
+                android:src="@drawable/btn_toggle_eff_on"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/white"
                 android:textSize="30dp"
-                android:text="효과음 ON/OFF"
+                android:text="SOUND"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />

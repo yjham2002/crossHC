@@ -35,12 +35,13 @@
             android:gravity="center"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-            <TextView
+            <ImageView
+                android:src="@drawable/img_exit_info"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:text="리뷰를 작성하시겠습니까?"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="100dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ctxBtn"
@@ -61,7 +62,7 @@
                 <TextView
                     android:textSize="17dp"
                     android:layout_margin="10dp"
-                    android:text="확인"
+                    android:text="REVIEW"
                     android:clickable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/confirmE"
@@ -77,7 +78,7 @@
                 <TextView
                     android:textSize="17dp"
                     android:layout_margin="10dp"
-                    android:text="취소"
+                    android:text="CANCEL"
                     android:clickable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/cancelE"
@@ -93,7 +94,7 @@
                 <TextView
                     android:textSize="17dp"
                     android:layout_margin="10dp"
-                    android:text="종료"
+                    android:text="EXIT"
                     android:clickable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/exitE"

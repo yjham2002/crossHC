@@ -11,30 +11,39 @@
     <FrameLayout
         android:layout_gravity="top|center_horizontal"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content">
-        <Button
+        <ImageView
             android:id="@+id/btn_back"
             android:text="뒤로"
+            android:src="@drawable/btn_back_light"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_gravity="left|center_vertical"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/black" />
         <LinearLayout
             android:layout_gravity="right|center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <Button
+            <ImageView
+                android:src="@drawable/btn_recommend"
                 android:id="@+id/btn_reco"
                 android:text="추천"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_gravity="left|center_vertical"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/black" />
             <ToggleButton
                 android:id="@+id/btn_bgm"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:textOff=""
                 android:textOn=""
                 android:background="@drawable/btn_toggle_bgm"/>
@@ -59,25 +68,33 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/mainLogo"
-            android:src="@drawable/common_full_open_on_phone"
+            android:src="@drawable/img_main"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_marginBottom="50dp"
             />
-        <Button
+        <ImageView
+            android:layout_marginTop="50dp"
             android:id="@+id/btn_play"
             android:text="PLAY"
-            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/btn_play"
+            android:layout_gravity="center"
             android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_height="60dp" />
+        <ImageView
             android:id="@+id/btn_cha"
             android:text="CHALLENGE"
-            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/btn_challenge"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="60dp" />
     </LinearLayout>
 
     <TextView
