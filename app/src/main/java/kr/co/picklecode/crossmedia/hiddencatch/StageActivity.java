@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.HashMap;
 
 import bases.BaseActivity;
 import bases.Configs;
@@ -46,7 +47,14 @@ public class StageActivity extends BaseActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 StageBox stageBox = StageSynchronizer.getStageInstance().get(position);
-                final int count = StageUtil.getWinningInfo().get(StageUtil.genKeyForWinInfo(stageBox.getId()));
+
+                final HashMap<String, Integer> winInfo = StageUtil.getWinningInfo();
+
+                int count = 0;
+
+                if(winInfo.containsKey(StageUtil.genKeyForWinInfo(stageBox.getId()))){
+                    count = winInfo.get(StageUtil.genKeyForWinInfo(stageBox.getId()));
+                }
 
                 StageActivity.this.selectedStage = stageBox;
                 if(stageBox.getOriginalPath() != null && !stageBox.getOriginalPath().trim().equals("")){

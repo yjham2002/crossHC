@@ -26,15 +26,11 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/btn_back"
                 android:scaleType="centerInside" />
-            <TextView
-                android:id="@+id/titleTop"
-                android:text="추천 어플"
-                android:textColor="@color/white"
-                android:textSize="@dimen/nav_title_size"
+            <ImageView
+                android:src="@drawable/img_recommend"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="@dimen/nav_life_size"
+                android:layout_height="@dimen/nav_life_size" />
         </FrameLayout>
 
         <android.support.v7.widget.RecyclerView
