@@ -73,6 +73,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onClick(View view){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (view.getId()){
             case R.id.btn_back:{
                 exitAction();

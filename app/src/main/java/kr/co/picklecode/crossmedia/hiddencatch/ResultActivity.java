@@ -10,12 +10,14 @@ import android.widget.TextView;
 import java.util.Random;
 
 import bases.BaseActivity;
+import bases.Constants;
 import bases.utils.ToastAndExit;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.AnimUtil;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
+import utils.PreferenceUtil;
 
 public class ResultActivity extends BaseActivity {
 
@@ -29,6 +31,7 @@ public class ResultActivity extends BaseActivity {
 
     @Override
     public void onClick(View v){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (v.getId()){
             case R.id.r_exit : {
                 if(this.resultBox.isChallenge()){
@@ -46,6 +49,8 @@ public class ResultActivity extends BaseActivity {
             case R.id.r_next : {
                 final int sizeOfList = StageSynchronizer.getStageInstance().size();
                 final int currentPos = StageSynchronizer.indexOf(this.resultBox.getStageBox());
+
+                PreferenceUtil.setInt(Constants.PREFERENCE.GAME_LAST_PLAY, currentPos);
 
                 int nextPos;
                 if(this.resultBox.isChallenge()){
@@ -76,6 +81,7 @@ public class ResultActivity extends BaseActivity {
             this.reward_bottom.setVisibility(View.GONE);
             this.result_anim_p.setVisibility(View.GONE);
             showResultImage(R.drawable.img_result_lose);
+            playSoundRandomWithin(PlayType.EFFECT, R.raw.eff_stage_fail_01, R.raw.eff_stage_fail_02);
         }else { // Stage Clear
             this.btn_replay.setVisibility(View.GONE);
             if (this.resultBox.isChallenge()) { // On Challenge
@@ -83,6 +89,7 @@ public class ResultActivity extends BaseActivity {
                 this.reward_bottom.setVisibility(View.GONE);
                 final int rewarded = reactChallenge();
                 this.reward_text.setText("" + rewarded);
+                playSound(R.raw.eff_challenge_succ, PlayType.EFFECT);
             } else { // On Normal
                 this.reward_center.setVisibility(View.GONE);
                 showNormalReaction();
@@ -92,6 +99,7 @@ public class ResultActivity extends BaseActivity {
                 } else { // On Stage Odd Number
                     this.reward_bottom.setVisibility(View.GONE);
                 }
+                playSound(R.raw.eff_stage_succ, PlayType.EFFECT);
             }
         }
     }

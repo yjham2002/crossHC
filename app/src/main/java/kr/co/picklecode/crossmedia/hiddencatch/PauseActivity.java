@@ -43,6 +43,7 @@ public class PauseActivity extends BaseActivity {
 
     @Override
     public void onClick(View v){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (v.getId()){
             case R.id.pmenu_con:{
                 finishWithTransition(R.anim.alpha_in, R.anim.alpha_out);

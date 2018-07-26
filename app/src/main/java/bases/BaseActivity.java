@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -42,10 +43,12 @@ import com.google.android.gms.ads.formats.NativeContentAdView;
 
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import kr.co.picklecode.crossmedia.hiddencatch.R;
+import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
 /**
  * Base class for activities
@@ -53,6 +56,62 @@ import kr.co.picklecode.crossmedia.hiddencatch.R;
  * @version 1.0.0
  */
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayerBgm;
+
+    protected enum PlayType{
+        EFFECT, BGM
+    }
+
+    protected void playSoundRandomWithin(PlayType playType, int... ids){
+        final int randomPos = new Random().nextInt(ids.length);
+        playSound(ids[randomPos], playType);
+    }
+
+    protected void playSound(int id, PlayType playType){
+        switch (playType){
+            case BGM:{
+                if(!StageUtil.isBgmOn()) return;
+                if(mediaPlayerBgm != null){
+                    mediaPlayerBgm.stop();
+                    mediaPlayerBgm.release();
+                }
+                mediaPlayerBgm = MediaPlayer.create(this, id);
+                mediaPlayerBgm.start();
+                break;
+            }
+            case EFFECT:{
+                if(!StageUtil.isEffectOn()) return;
+                if(mediaPlayer != null){
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(this, id);
+                mediaPlayer.start();
+                break;
+            }
+        }
+    }
+
+    protected void stopSound(PlayType playType){
+        switch (playType){
+            case BGM:{
+                if(mediaPlayerBgm != null){
+                    mediaPlayerBgm.stop();
+                    mediaPlayerBgm.release();
+                }
+                break;
+            }
+            case EFFECT:{
+                if(mediaPlayer != null){
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                break;
+            }
+        }
+    }
 
     private static final String FILTER_AFFINITY_EXIT = "FinishingCall";
 

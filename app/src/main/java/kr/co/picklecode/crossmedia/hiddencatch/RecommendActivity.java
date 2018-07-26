@@ -60,6 +60,7 @@ public class RecommendActivity extends BaseActivity {
 
     @Override
     public void onClick(View view){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (view.getId()){
             case R.id.left_back:{
                 finish();

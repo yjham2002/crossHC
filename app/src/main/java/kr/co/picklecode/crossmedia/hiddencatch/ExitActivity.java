@@ -21,6 +21,7 @@ public class ExitActivity extends BaseActivity {
 
     @Override
     public void onClick(View v){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (v.getId()){
             case R.id.confirmE : {
                 moveToMarket(getResources().getString(R.string.review_package_name));

@@ -53,16 +53,6 @@ public class GameActivity extends BaseActivity {
     private ImageView animView, hintView;
     private CircleProgress life;
     private TouchableImageView imgOrigin, imgQues;
-    private MediaPlayer mediaPlayer;
-
-    private void playSound(int id){
-        if(mediaPlayer != null){
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
-        mediaPlayer = MediaPlayer.create(this, id);
-        mediaPlayer.start();
-    }
 
     private BroadcastReceiver replayReceiver = new BroadcastReceiver() {
         @Override
@@ -160,6 +150,8 @@ public class GameActivity extends BaseActivity {
                 .translationY(coordY + (hintView.getHeight() / 2))
                 .setDuration(0);
 
+        playSoundRandomWithin(PlayType.EFFECT, R.raw.eff_hint_01, R.raw.eff_hint_02, R.raw.eff_hint_03);
+
         hintView.setVisibility(View.VISIBLE);
 
         new Handler().postDelayed(new Runnable() {
@@ -206,6 +198,7 @@ public class GameActivity extends BaseActivity {
 
     @Override
     public void onClick(View v){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (v.getId()){
             case R.id.hintBack : {
                 final int point = StageUtil.getPoint();
@@ -369,9 +362,9 @@ public class GameActivity extends BaseActivity {
                     drawAnsweredPoint(x, y);
                 }
             }, SHOW_TIME);
-            if(StageUtil.isEffectOn()) playSound(R.raw.correct);
+            playSoundRandomWithin(PlayType.EFFECT, R.raw.eff_answer_01, R.raw.eff_answer_02, R.raw.eff_answer_03, R.raw.eff_answer_04);
         }else{
-            if(StageUtil.isEffectOn()) playSound(R.raw.beep);
+            playSound(R.raw.beep, PlayType.EFFECT);
         }
     }
 

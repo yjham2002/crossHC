@@ -16,11 +16,13 @@ import java.util.HashMap;
 
 import bases.BaseActivity;
 import bases.Configs;
+import bases.Constants;
 import bases.imageTransform.RoundedTransform;
 import kr.co.picklecode.crossmedia.hiddencatch.adapter.StageGridAdapter;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
+import utils.PreferenceUtil;
 
 public class StageActivity extends BaseActivity {
 
@@ -50,12 +52,20 @@ public class StageActivity extends BaseActivity {
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                playSound(R.raw.eff_touch, PlayType.EFFECT);
                 selectStage(position);
             }
         });
 
         this.titleTop.setText(winInfo.size() + " / " + StageSynchronizer.getStageInstance().size());
-        if(StageSynchronizer.getStageInstance().size() > 0) selectStage(0);
+
+        int standardPos = PreferenceUtil.getInt(Constants.PREFERENCE.GAME_LAST_PLAY, 0);
+
+        if(StageSynchronizer.getStageInstance().size() >= (standardPos + 1)) {
+            selectStage(standardPos);
+        }else if(StageSynchronizer.getStageInstance().size() > 0){
+            selectStage(0);
+        }
 
         this.stageGridAdapter.setDataAndRefresh(StageSynchronizer.getStageInstance());
 
@@ -100,6 +110,7 @@ public class StageActivity extends BaseActivity {
 
     @Override
     public void onClick(View view){
+        playSound(R.raw.eff_touch, PlayType.EFFECT);
         switch (view.getId()){
             case R.id.left_back:{
                 finishAndStartActivity(MainActivity.class);
