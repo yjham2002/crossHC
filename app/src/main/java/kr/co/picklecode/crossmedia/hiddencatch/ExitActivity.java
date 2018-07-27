@@ -13,20 +13,13 @@ import bases.BaseActivity;
 public class ExitActivity extends BaseActivity {
 
     private View btn_confirm, btn_cancel, btn_exit;
-    private AdView adView;
 
     private void init(){
         this.btn_confirm = findViewById(R.id.confirmE);
         this.btn_cancel = findViewById(R.id.cancelE);
         this.btn_exit = findViewById(R.id.exitE);
-        this.adView = findViewById(R.id.adView);
 
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
-                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
-                .build();
-        adView.loadAd(adRequest);
+        refreshAd(false, true);
 
         setClick(btn_confirm, btn_cancel, btn_exit);
     }

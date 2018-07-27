@@ -4,16 +4,14 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+    <FrameLayout
+        android:id="@+id/fl_adplaceholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_above="@id/bottomWrapper"
         android:layout_centerHorizontal="true"
-        ads:adSize="SMART_BANNER"
-        android:layout_gravity="bottom|center_horizontal"
-        ads:adUnitId="@string/ADMOB_BANNER_ID" />
+        />
 
     <RelativeLayout
         android:id="@+id/bottomWrapper"
@@ -21,7 +19,7 @@
         android:background="@color/colorPrimary"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="230dp">
         <LinearLayout
             android:layout_alignParentTop="true"
             android:layout_above="@id/ctxBtn"
