@@ -40,6 +40,7 @@ import com.google.android.gms.ads.formats.NativeAppInstallAd;
 import com.google.android.gms.ads.formats.NativeAppInstallAdView;
 import com.google.android.gms.ads.formats.NativeContentAd;
 import com.google.android.gms.ads.formats.NativeContentAdView;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 
 import java.io.File;
 import java.util.List;
@@ -263,6 +264,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 activeNetwork.isConnectedOrConnecting();
 
         return isConnected;
+    }
+
+    protected void loadRewardedVideoAd(RewardedVideoAd mRewardedVideoAd, String id) {
+        mRewardedVideoAd.loadAd(id, new AdRequest.Builder().build());
     }
 
     protected void loadInterstitialAd(final SimpleCallback onDone, final SimpleCallback onClose) {

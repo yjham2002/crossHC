@@ -14,6 +14,7 @@ public class Constants {
         String FILTER_REPLAY = "kr.co.picklecode.crossmedia.hiddencatch.FILTER_REPLAY";
         String FILTER_STOP_MUSIC = "kr.co.picklecode.crossmedia.hiddencatch.FILTER_STOP_MUSIC";
         String FILTER_EXTRA_KEY_MUSIC = "kr.co.picklecode.crossmedia.hiddencatch.FILTER_EXTRA_KEY_MUSIC";
+        String FILTER_REFRESH = "kr.co.picklecode.crossmedia.hiddencatch.FILTER_REFRESH";
     }
 
     public interface PREFERENCE{

@@ -74,6 +74,13 @@ public class GameActivity extends BaseActivity {
         }
     };
 
+    private BroadcastReceiver rewardReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateViewsAndCheck();
+        }
+    };
+
     private void initGame(){
         this.mainWrapper = findViewById(R.id.mainWrapper);
         this.animView = findViewById(R.id.animView);
@@ -411,6 +418,7 @@ public class GameActivity extends BaseActivity {
 
         registerReceiver(replayReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REPLAY));
         registerReceiver(musicReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_STOP_MUSIC));
+        registerReceiver(rewardReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REFRESH));
 
         initGame();
     }
@@ -420,6 +428,7 @@ public class GameActivity extends BaseActivity {
         super.onDestroy();
         unregisterReceiver(replayReceiver);
         unregisterReceiver(musicReceiver);
+        unregisterReceiver(rewardReceiver);
         stopSound(PlayType.BGM);
     }
 
