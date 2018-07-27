@@ -101,14 +101,19 @@ public class MainActivity extends BaseActivity {
                 break;
             }
             case R.id.btn_cha:{
-                final List<StageBox> list = StageSynchronizer.getStageInstance();
+                loadInterstitialAdForProcess(new SimpleCallback() {
+                    @Override
+                    public void callback() {
+                        final List<StageBox> list = StageSynchronizer.getStageInstance();
 
-                if(list == null || list.size() == 0){
-                      showToast("게임 데이터가 존재하지 않습니다.");
-                }
+                        if(list == null || list.size() == 0){
+                            showToast("게임 데이터가 존재하지 않습니다.");
+                        }
 
-                final StageBox selectedStage = list.get(new Random().nextInt(list.size()));
-                StageUtil.sendAndFinish(this, selectedStage, PregameActivity.class, true);
+                        final StageBox selectedStage = list.get(new Random().nextInt(list.size()));
+                        StageUtil.sendAndFinish(MainActivity.this, selectedStage, PregameActivity.class, true);
+                    }
+                }, 5000);
                 break;
             }
             default: break;

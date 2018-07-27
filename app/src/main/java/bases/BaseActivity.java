@@ -270,9 +270,53 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         mRewardedVideoAd.loadAd(id, new AdRequest.Builder().build());
     }
 
+    protected void loadInterstitialAdForProcess(final SimpleCallback callback, long expiration){
+        final Handler failHandler = new Handler();
+        final Runnable failRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if(callback != null) callback.callback();
+            }
+        };
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.ADMOB_INTERSITITIAL_AD_ID));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+
+                if(mInterstitialAd.isLoaded()) {
+                    failHandler.removeCallbacks(failRunnable);
+                    mInterstitialAd.show();
+                }
+            }
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                if(callback != null) callback.callback();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                if(callback != null) callback.callback();
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
+
+        failHandler.postDelayed(failRunnable, expiration);
+        mInterstitialAd.loadAd(adRequest);
+    }
+
     protected void loadInterstitialAd(final SimpleCallback onDone, final SimpleCallback onClose) {
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-1846833106939117/2370912396");
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.ADMOB_INTERSITITIAL_AD_ID));
         mInterstitialAd.setAdListener(new AdListener() {
 
             @Override
@@ -300,7 +344,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2").addTestDevice("A054380EE96401ECDEB88482E433AEF2").build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
         mInterstitialAd.loadAd(adRequest);
     }
 
@@ -445,7 +492,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             return;
         }
 
-        AdLoader.Builder builder = new AdLoader.Builder(this, "ca-app-pub-1846833106939117/4314936497");
+        AdLoader.Builder builder = new AdLoader.Builder(this, getResources().getString(R.string.ADMOB_NATIVE_AD_ID));
 
         if (requestAppInstallAds) {
             builder.forAppInstallAd(new NativeAppInstallAd.OnAppInstallAdLoadedListener() {
