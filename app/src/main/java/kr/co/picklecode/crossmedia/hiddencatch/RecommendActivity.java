@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.List;
 
 import bases.BaseActivity;
@@ -23,6 +26,7 @@ public class RecommendActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private AppListAdapter appListAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private AdView adView;
 
     public void init(){
         this.btn_back = findViewById(R.id.left_back);
@@ -37,6 +41,15 @@ public class RecommendActivity extends BaseActivity {
         this.recyclerView.setAdapter(this.appListAdapter);
         this.recyclerView.setLayoutManager(this.linearLayoutManager);
         this.recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        this.adView = findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
+        adView.loadAd(adRequest);
 
         setClick(this.btn_back);
     }

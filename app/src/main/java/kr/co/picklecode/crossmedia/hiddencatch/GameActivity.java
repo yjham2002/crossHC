@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +43,7 @@ public class GameActivity extends BaseActivity {
 
     private FrameLayout mainWrapper;
 
+    private AdView adView;
     private StageBox stageBox;
     private QuestionBox questionBox;
     private int selectedQuestionPos = -1;
@@ -83,6 +86,14 @@ public class GameActivity extends BaseActivity {
         this.imgOrigin = findViewById(R.id.imgOrigin);
         this.imgQues = findViewById(R.id.imgQues);
         this.life = findViewById(R.id.life);
+        this.adView = findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
+        adView.loadAd(adRequest);
 
         setClick(hintBack, btn_pause);
 

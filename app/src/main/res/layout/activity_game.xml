@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/mainWrapper"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context="kr.co.picklecode.crossmedia.hiddencatch.GameActivity">
     <RelativeLayout
@@ -159,14 +160,15 @@
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content">
-            <TextView
+            <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
-                android:gravity="center"
-                android:background="@color/transparent_white"
-                android:text="광고 영역"
-                android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                android:layout_gravity="bottom|center_horizontal"
+                ads:adUnitId="@string/ADMOB_BANNER_ID">
+            </com.google.android.gms.ads.AdView>
         </LinearLayout>
 
     </RelativeLayout>

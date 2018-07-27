@@ -9,6 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import bases.BaseActivity;
 import bases.Constants;
 import kr.co.picklecode.crossmedia.hiddencatch.util.AnimUtil;
@@ -18,6 +21,7 @@ public class PauseActivity extends BaseActivity {
 
     private View m_co, m_re, m_st, m_b, m_e;
     private ImageView stat_bgm, stat_eff;
+    private AdView adView;
 
     private void init(){
         this.m_co = findViewById(R.id.pmenu_con);
@@ -28,6 +32,15 @@ public class PauseActivity extends BaseActivity {
 
         this.stat_bgm = findViewById(R.id.bgm_stat);
         this.stat_eff = findViewById(R.id.eff_stat);
+
+        this.adView = findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
+        adView.loadAd(adRequest);
 
         setClick(m_co, m_re, m_st, m_b, m_e);
 

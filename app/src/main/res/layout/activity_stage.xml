@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context="kr.co.picklecode.crossmedia.hiddencatch.RecommendActivity">
     <RelativeLayout
@@ -98,14 +98,14 @@
                         android:layout_height="55dp" />
                 </LinearLayout>
             </FrameLayout>
-            <TextView
+            <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
-                android:gravity="center"
-                android:background="@color/transparent_white"
-                android:text="광고 영역"
-                android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                android:layout_gravity="bottom|center_horizontal"
+                ads:adUnitId="@string/ADMOB_BANNER_ID" />
         </LinearLayout>
 
     </RelativeLayout>

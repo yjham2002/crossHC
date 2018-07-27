@@ -9,6 +9,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.HashMap;
@@ -31,6 +33,7 @@ public class StageActivity extends BaseActivity {
     private StageGridAdapter stageGridAdapter;
     private View btn_back, progress;
     private StageBox selectedStage = null;
+    private AdView adView;
 
     public void init(){
         this.titleTop = findViewById(R.id.titleTop);
@@ -46,6 +49,15 @@ public class StageActivity extends BaseActivity {
         this.gridView = findViewById(R.id.gridView);
         this.stageGridAdapter = new StageGridAdapter(this);
         this.gridView.setAdapter(stageGridAdapter);
+
+        this.adView = findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
+        adView.loadAd(adRequest);
 
         final HashMap<String, Integer> winInfo = StageUtil.getWinningInfo();
 

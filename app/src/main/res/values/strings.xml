@@ -2,4 +2,7 @@
     <string name="app_name">HiddenCatch</string>
     <string name="ad_attribution">Ad</string>
     <string name="review_package_name">kr.co.picklecode.crossmedia.hiddencatch</string>
+
+    <string name="ADMOB_ID">ca-app-pub-1846833106939117~4067137440</string>
+    <string name="ADMOB_BANNER_ID">ca-app-pub-1846833106939117/2562484084</string>
 </resources>

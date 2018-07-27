@@ -16,6 +16,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.io.File;
 import java.util.List;
 import java.util.Random;
@@ -31,6 +34,8 @@ import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 import utils.PreferenceUtil;
 
 public class MainActivity extends BaseActivity {
+
+    private AdView adView;
 
     private View btn_back, btn_reco, btn_play, btn_cha;
     private ToggleButton btn_bgm, btn_eff;
@@ -59,6 +64,14 @@ public class MainActivity extends BaseActivity {
         this.btn_eff = findViewById(R.id.btn_eff);
         this.btn_play = findViewById(R.id.btn_play);
         this.btn_cha = findViewById(R.id.btn_cha);
+        this.adView = findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("580AF1AB9D6734064E03DF3C086DB1B2")
+                .addTestDevice("A054380EE96401ECDEB88482E433AEF2")
+                .build();
+        adView.loadAd(adRequest);
 
         syncToggles();
 
