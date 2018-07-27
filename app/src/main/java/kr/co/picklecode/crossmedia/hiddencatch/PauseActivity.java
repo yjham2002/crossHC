@@ -59,7 +59,14 @@ public class PauseActivity extends BaseActivity {
                 break;
             }
             case R.id.pmenu_bgm:{
-                StageUtil.setBGM(!StageUtil.isBgmOn());
+                final boolean toGo = !StageUtil.isBgmOn();
+                StageUtil.setBGM(toGo);
+
+                final Intent intent = new Intent(Constants.INTENT_FILTER.FILTER_STOP_MUSIC);
+                intent.putExtra(Constants.INTENT_FILTER.FILTER_EXTRA_KEY_MUSIC, toGo);
+
+                sendBroadcast(intent);
+
                 syncToggles();
                 break;
             }

@@ -50,12 +50,11 @@ public class ResultActivity extends BaseActivity {
                 final int sizeOfList = StageSynchronizer.getStageInstance().size();
                 final int currentPos = StageSynchronizer.indexOf(this.resultBox.getStageBox());
 
-                PreferenceUtil.setInt(Constants.PREFERENCE.GAME_LAST_PLAY, currentPos);
-
                 int nextPos;
                 if(this.resultBox.isChallenge()){
                     nextPos = new Random().nextInt(sizeOfList);
                 }else{
+                    PreferenceUtil.setInt(Constants.PREFERENCE.GAME_LAST_PLAY, currentPos);
                     if(currentPos == -1) nextPos = 0;
                     else if(currentPos + 1 >= sizeOfList) nextPos = 0;
                     else nextPos = currentPos + 1;

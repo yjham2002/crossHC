@@ -10,14 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
 import java.io.File;
 import java.util.HashMap;
 
 import bases.BaseActivity;
 import bases.Configs;
 import bases.Constants;
-import bases.imageTransform.RoundedTransform;
 import kr.co.picklecode.crossmedia.hiddencatch.adapter.StageGridAdapter;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
@@ -92,6 +90,7 @@ public class StageActivity extends BaseActivity {
                     .load(dir)
                     .placeholder(R.drawable.icon_hour_glass)
                     .into(preImg);
+//            Glide.with(this).load(dir).apply(RequestOptions.bitmapTransform(new BlurTransformation(25))).into(preImg);
         }
 
         currentStage.setText("STAGE " + (position + 1));

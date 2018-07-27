@@ -102,6 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 if(mediaPlayerBgm != null){
                     mediaPlayerBgm.stop();
                     mediaPlayerBgm.release();
+                    mediaPlayerBgm = null;
                 }
                 break;
             }
@@ -109,6 +110,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 if(mediaPlayer != null){
                     mediaPlayer.stop();
                     mediaPlayer.release();
+                    mediaPlayer = null;
                 }
                 break;
             }

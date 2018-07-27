@@ -62,6 +62,15 @@ public class GameActivity extends BaseActivity {
         }
     };
 
+    private BroadcastReceiver musicReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final boolean toGo = intent.getExtras().getBoolean(Constants.INTENT_FILTER.FILTER_EXTRA_KEY_MUSIC);
+            if(toGo) playBgm();
+            else stopSound(PlayType.BGM);
+        }
+    };
+
     private void initGame(){
         this.mainWrapper = findViewById(R.id.mainWrapper);
         this.animView = findViewById(R.id.animView);
@@ -118,6 +127,10 @@ public class GameActivity extends BaseActivity {
 
         updateViewsAndCheck();
 
+        playBgm();
+    }
+
+    private void playBgm(){
         playSoundRandomWithin(PlayType.BGM, R.raw.bgm_01, R.raw.bgm_02, R.raw.bgm_03, R.raw.bgm_04, R.raw.bgm_05);
     }
 
@@ -386,6 +399,7 @@ public class GameActivity extends BaseActivity {
         setContentView(R.layout.activity_game);
 
         registerReceiver(replayReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REPLAY));
+        registerReceiver(musicReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_STOP_MUSIC));
 
         initGame();
     }
@@ -394,6 +408,7 @@ public class GameActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(replayReceiver);
+        unregisterReceiver(musicReceiver);
         stopSound(PlayType.BGM);
     }
 
