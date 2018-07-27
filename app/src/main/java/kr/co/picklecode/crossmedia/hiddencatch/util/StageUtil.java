@@ -17,6 +17,7 @@ import java.util.Random;
 
 import bases.Configs;
 import bases.Constants;
+import kr.co.picklecode.crossmedia.hiddencatch.GameActivity;
 import kr.co.picklecode.crossmedia.hiddencatch.R;
 import kr.co.picklecode.crossmedia.hiddencatch.model.QuestionBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
@@ -31,11 +32,20 @@ import utils.PreferenceUtil;
 public class StageUtil {
 
     private static int continuous = 0;
+    private static int lifePoint = GameActivity.MAX_LIFE;
 
     private static final int MAX_HINT_COUNT = 99;
 
     private static final String KEY_STAGE = "KEY_INTERNAL_STAGE_INTENT";
     private static final String KEY_RESULT = "KEY_INTERNAL_RESULT_INTENT";
+
+    public static int getLifePoint() {
+        return lifePoint;
+    }
+
+    public static void setLifePoint(int lifePoint) {
+        StageUtil.lifePoint = lifePoint;
+    }
 
     public static void injectStage(Intent intent, StageBox stageBox){
         final ObjectMapper objectMapper = new ObjectMapper();
@@ -231,6 +241,7 @@ public class StageUtil {
     }
 
     public static void setContinuous(int continuous) {
+        if(continuous == 0) StageUtil.lifePoint = GameActivity.MAX_LIFE;
         StageUtil.continuous = continuous;
     }
 }

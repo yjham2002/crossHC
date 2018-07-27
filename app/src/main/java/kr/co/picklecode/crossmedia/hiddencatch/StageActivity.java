@@ -150,6 +150,12 @@ public class StageActivity extends BaseActivity {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        StageUtil.setContinuous(0);
+    }
+
+    @Override
     public void onBackPressed() {
         finishAndStartActivity(MainActivity.class);
     }

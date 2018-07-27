@@ -157,13 +157,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <FrameLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_gravity="left|center_vertical"
                 android:id="@+id/r_exit"
                 android:clickable="true"
+                android:layout_weight="1"
                 android:src="@drawable/btn_result_home"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="70dp"
@@ -172,6 +174,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/r_replay"
                 android:clickable="true"
+                android:layout_weight="1"
                 android:src="@drawable/btn_result_replay"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="70dp"
@@ -180,11 +183,12 @@
                 android:layout_gravity="right|center_vertical"
                 android:id="@+id/r_next"
                 android:clickable="true"
+                android:layout_weight="1"
                 android:src="@drawable/btn_result_next"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="70dp"
                 android:layout_height="70dp" />
-        </FrameLayout>
+        </LinearLayout>
         <FrameLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -198,7 +202,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:src="@drawable/btn_result_reward_normal"
-                    android:layout_width="70dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content" />
                 <ImageView
                     android:visibility="gone"

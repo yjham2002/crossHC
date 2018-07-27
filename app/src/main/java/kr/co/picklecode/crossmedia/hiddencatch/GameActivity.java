@@ -28,17 +28,20 @@ import java.util.Vector;
 
 import bases.BaseActivity;
 import bases.Constants;
+import bases.utils.ToastAndExit;
 import kr.co.picklecode.crossmedia.hiddencatch.model.AnswerBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.QuestionBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.ResultBox;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
+import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 import kr.co.picklecode.crossmedia.hiddencatch.view.OnTouchBack;
 import kr.co.picklecode.crossmedia.hiddencatch.view.TouchableImageView;
+import utils.PreferenceUtil;
 
 public class GameActivity extends BaseActivity {
 
-    private static final int MAX_LIFE = 5;
+    public static final int MAX_LIFE = 5;
     private int currentLife;
 
     private FrameLayout mainWrapper;
@@ -139,6 +142,7 @@ public class GameActivity extends BaseActivity {
         }
 
         this.currentLife = MAX_LIFE;
+        if(this.resultBox.isChallenge()) this.currentLife = StageUtil.getLifePoint();
 
         final int lifeRatio = (int)(((double)currentLife / (double)MAX_LIFE) * 100.0d);
         this.life.setProgress(lifeRatio);
@@ -216,13 +220,12 @@ public class GameActivity extends BaseActivity {
                 .translationY(y + (animView.getHeight()))
                 .setDuration(0);
 
-        animView.setVisibility(View.VISIBLE);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startAnimationWithIn(animView, id, 0);
                 stopAnimationOf(animView, SHOW_TIME);
+                animView.setVisibility(View.VISIBLE);
             }
         }, 0);
 
@@ -369,14 +372,21 @@ public class GameActivity extends BaseActivity {
     private void finishGame(boolean win){
         Log.e("GameActivity", "Game Finished : [Win : " + win + "]");
         this.resultBox.setLosed(!win);
-        if(win) {
+        if(win && !this.resultBox.isChallenge()) {
             int score = 0;
             if(this.resultBox.isHintUsed() && this.resultBox.isHeartUsed()) score = 1;
             else if(this.resultBox.isHintUsed() || this.resultBox.isHeartUsed()) score = 2;
             else score = 3;
             StageUtil.saveWinningInfo(this.stageBox.getId(), score, false);
         }
-        StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
+
+        if(this.resultBox.isChallenge() && win){
+            StageUtil.setLifePoint(this.currentLife);
+            nextStageForChallenge();
+        }else{
+            StageUtil.sendAndFinishWithTransition(this, this.resultBox, ResultActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
+        }
+
     }
 
     private Handler drawHandler = new Handler();
@@ -421,6 +431,21 @@ public class GameActivity extends BaseActivity {
         registerReceiver(rewardReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REFRESH));
 
         initGame();
+    }
+
+    private void nextStageForChallenge(){
+        final int sizeOfList = StageSynchronizer.getStageInstance().size();
+
+        int nextPos = new Random().nextInt(sizeOfList);
+
+        this.resultBox.setReplay(false);
+        this.resultBox.setStageBox(StageSynchronizer.getStageInstance().get(nextPos));
+
+        if(this.resultBox.getStageBox().getQuestions() == null || this.resultBox.getStageBox().getQuestions().size() == 0){
+            new ToastAndExit(this, "스테이지 데이터가 올바르지 않아 게임을 종료합니다.").runWithLog("Stage Data is wrong.");
+        }
+
+        StageUtil.sendAndFinishWithTransition(this, this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, this.resultBox.isChallenge());
     }
 
     @Override

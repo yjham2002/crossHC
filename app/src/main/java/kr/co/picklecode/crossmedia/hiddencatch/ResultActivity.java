@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Random;
 
 import bases.BaseActivity;
@@ -43,13 +44,31 @@ public class ResultActivity extends BaseActivity {
                 break;
             }
             case R.id.r_replay : {
-                loadInterstitialAdForProcess(new SimpleCallback() {
-                    @Override
-                    public void callback() {
-                        ResultActivity.this.resultBox.setReplay(true);
-                        StageUtil.sendAndFinishWithTransition(ResultActivity.this, ResultActivity.this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, ResultActivity.this.resultBox.isChallenge());
-                    }
-                }, 5000);
+                if(ResultActivity.this.resultBox.isChallenge()){
+                    StageUtil.setContinuous(0);
+
+                    loadInterstitialAdForProcess(new SimpleCallback() {
+                        @Override
+                        public void callback() {
+                            final List<StageBox> list = StageSynchronizer.getStageInstance();
+
+                            if(list == null || list.size() == 0){
+                                showToast("게임 데이터가 존재하지 않습니다.");
+                            }
+
+                            final StageBox selectedStage = list.get(new Random().nextInt(list.size()));
+                            StageUtil.sendAndFinish(ResultActivity.this, selectedStage, PregameActivity.class, true);
+                        }
+                    }, 5000);
+                }else {
+                    loadInterstitialAdForProcess(new SimpleCallback() {
+                        @Override
+                        public void callback() {
+                            ResultActivity.this.resultBox.setReplay(true);
+                            StageUtil.sendAndFinishWithTransition(ResultActivity.this, ResultActivity.this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, ResultActivity.this.resultBox.isChallenge());
+                        }
+                    }, 5000);
+                }
                 break;
             }
             case R.id.r_next : {
@@ -97,6 +116,8 @@ public class ResultActivity extends BaseActivity {
     private void setModeVisibilityAndSet(){
         if(!this.resultBox.isChallenge()){
             this.chText.setVisibility(View.GONE);
+        }else{
+            this.btn_next.setVisibility(View.GONE);
         }
 
         if(this.resultBox.isLosed()){ // Stage Failure
@@ -200,7 +221,7 @@ public class ResultActivity extends BaseActivity {
 
     private void initData(){
         this.resultBox = StageUtil.executeResult(getIntent());
-
+        if(this.resultBox.isChallenge()) this.resultBox.setLosed(false);
     }
 
     private void init(){
