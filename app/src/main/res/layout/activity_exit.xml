@@ -2,24 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:ads="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_above="@id/bottomWrapper"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            android:text="광고영역"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        ads:adSize="SMART_BANNER"
+        android:layout_gravity="bottom|center_horizontal"
+        ads:adUnitId="@string/ADMOB_BANNER_ID" />
 
     <RelativeLayout
         android:id="@+id/bottomWrapper"
