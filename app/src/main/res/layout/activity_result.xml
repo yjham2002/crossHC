@@ -152,6 +152,7 @@
 
     <LinearLayout
         android:layout_margin="30dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="bottom|center_horizontal"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -224,5 +225,13 @@
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
-
+    <TextView
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:id="@+id/chText"
+        android:textSize="20dp"
+        android:textColor="@color/chColor"
+        android:text="Challenge Mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>

@@ -28,7 +28,7 @@ public class ResultActivity extends BaseActivity {
     private ImageView result_img, result_anim;
     private View result_anim_p, progress_sp_1, progress_sp_2;
     private View reward_center, reward_bottom, btn_exit, btn_replay, btn_next;
-    private TextView reward_text, reward_text_bottom, rt_hint, rt_heart;
+    private TextView reward_text, reward_text_bottom, rt_hint, rt_heart, chText;
 
     @Override
     public void onClick(View v){
@@ -95,6 +95,10 @@ public class ResultActivity extends BaseActivity {
     }
 
     private void setModeVisibilityAndSet(){
+        if(!this.resultBox.isChallenge()){
+            this.chText.setVisibility(View.GONE);
+        }
+
         if(this.resultBox.isLosed()){ // Stage Failure
             this.img_nexttime.setVisibility(View.VISIBLE);
             this.reward_center.setVisibility(View.GONE);
@@ -213,6 +217,8 @@ public class ResultActivity extends BaseActivity {
         this.progress_view_01 = findViewById(R.id.progress_01);
         this.progress_view_02 = findViewById(R.id.progress_02);
         this.progress_view_03 = findViewById(R.id.progress_03);
+
+        this.chText = findViewById(R.id.chText);
 
         this.result_img = findViewById(R.id.result_img);
         this.result_anim = findViewById(R.id.result_anim);
