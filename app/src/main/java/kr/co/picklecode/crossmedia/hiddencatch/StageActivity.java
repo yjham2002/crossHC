@@ -16,6 +16,7 @@ import java.util.HashMap;
 import bases.BaseActivity;
 import bases.Configs;
 import bases.Constants;
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 import kr.co.picklecode.crossmedia.hiddencatch.adapter.StageGridAdapter;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
@@ -89,6 +90,7 @@ public class StageActivity extends BaseActivity {
                     .get()
                     .load(dir)
                     .placeholder(R.drawable.icon_hour_glass)
+                    .transform(new BlurTransformation(this))
                     .into(preImg);
 //            Glide.with(this).load(dir).apply(RequestOptions.bitmapTransform(new BlurTransformation(25))).into(preImg);
         }
