@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -20,10 +21,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:multidex:1.0.1'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
+    implementation 'com.airbnb.android:lottie:2.5.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.android.gms:play-services-ads:11.0.2'
     implementation 'com.google.firebase:firebase-ads:11.0.2'

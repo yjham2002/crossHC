@@ -2,6 +2,7 @@ package bases;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
@@ -12,7 +13,7 @@ import kr.co.picklecode.crossmedia.hiddencatch.R;
 import kr.co.picklecode.crossmedia.hiddencatch.model.StageBox;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 
-public class BaseApp extends Application {
+public class BaseApp extends MultiDexApplication {
 
     private static Context context;
 

@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +28,8 @@ public class ResultActivity extends BaseActivity {
     private ResultBox resultBox;
 
     private ImageView progress_view_01, progress_view_02, progress_view_03, img_nexttime;
-    private ImageView result_img, result_anim;
+    private ImageView result_img;
+    private LottieAnimationView result_anim;
     private View result_anim_p, progress_sp_1, progress_sp_2;
     private View reward_center, reward_bottom, btn_exit, btn_replay, btn_next;
     private TextView reward_text, reward_text_bottom, rt_hint, rt_heart, chText;
@@ -114,6 +117,16 @@ public class ResultActivity extends BaseActivity {
     }
 
     private void setModeVisibilityAndSet(){
+
+        if(this.resultBox.isLosed()){
+            result_anim.setAnimation("loader_animation.json");
+        }else{
+            result_anim.setAnimation("confetti.json");
+        }
+
+        result_anim.loop(false);
+        result_anim.playAnimation();
+
         if(!this.resultBox.isChallenge()){
             this.chText.setVisibility(View.GONE);
         }else{

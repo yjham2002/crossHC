@@ -11,11 +11,15 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnimationSet;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -56,7 +60,8 @@ public class GameActivity extends BaseActivity {
 
     private TextView hintText, scoreText, scoreTextT;
     private View btn_pause, hintBack;
-    private ImageView animView, hintView;
+    private ImageView animView;
+    private LottieAnimationView hintView;
     private CircleProgress life;
     private TouchableImageView imgOrigin, imgQues;
 
@@ -194,8 +199,11 @@ public class GameActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startAnimationWithIn(hintView, R.drawable.anim_frame_hint, 0);
-                stopAnimationOf(hintView, SHOW_TIME);
+                hintView.setAnimation("trail_loading.json");
+                hintView.loop(false);
+                hintView.playAnimation();
+//                startAnimationWithIn(hintView, R.drawable.anim_frame_hint, 0);
+//                stopAnimationOf(hintView, SHOW_TIME);
             }
         }, 0);
 
@@ -225,6 +233,40 @@ public class GameActivity extends BaseActivity {
             public void run() {
                 startAnimationWithIn(animView, id, 0);
                 stopAnimationOf(animView, SHOW_TIME);
+                animView.setVisibility(View.VISIBLE);
+            }
+        }, 0);
+
+        hideHandler.postDelayed(hideRunnable, SHOW_TIME);
+    }
+
+    private void displayAnim(final int id, float x, float y, boolean win){
+        hideHandler.removeCallbacks(hideRunnable);
+
+        animView.animate()
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .translationX(x - (animView.getWidth() / 2))
+                .translationY(y + (animView.getHeight()))
+                .setDuration(0);
+
+        animView.setImageDrawable(getResources().getDrawable(R.drawable.anim_correct_01));
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AnimationSet animSet = new AnimationSet(false);
+                ScaleAnimation zoom_in = new ScaleAnimation(1, 1.3f, 1, 1.3f);
+                zoom_in.setDuration(750);
+                zoom_in.setStartOffset(0);
+                ScaleAnimation zoom_out = new ScaleAnimation(1, 1.3f, 1, 1.3f);
+                zoom_out.setDuration(750);
+                zoom_out.setStartOffset(750);
+
+                animSet.addAnimation(zoom_in);
+                animSet.addAnimation(zoom_out);
+
+                animView.startAnimation(animSet);
+
                 animView.setVisibility(View.VISIBLE);
             }
         }, 0);
