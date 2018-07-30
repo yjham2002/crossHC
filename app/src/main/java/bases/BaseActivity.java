@@ -295,12 +295,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
+                failHandler.removeCallbacks(failRunnable);
                 if(callback != null) callback.callback();
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
+                failHandler.removeCallbacks(failRunnable);
                 if(callback != null) callback.callback();
             }
         });
