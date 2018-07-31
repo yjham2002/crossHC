@@ -157,6 +157,18 @@ public class GameActivity extends BaseActivity {
         playBgm();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        pauseSound(PlayType.BGM);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(isInit) resumeSound(PlayType.BGM);
+    }
+
     private void playBgm(){
         playSoundRandomWithin(PlayType.BGM, R.raw.bgm_01, R.raw.bgm_02, R.raw.bgm_03, R.raw.bgm_04, R.raw.bgm_05);
     }

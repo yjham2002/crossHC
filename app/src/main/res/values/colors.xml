@@ -3,6 +3,7 @@
     <color name="colorPrimary">#262626</color>
     <color name="colorPrimaryDark">#262626</color>
     <color name="chColor">#4E4E4E</color>
+    <color name="crossGray">#6c6c6c</color>
     <color name="colorPrimaryDark2">#111111</color>
     <color name="colorPrimaryPlayer">#0EAD94</color>
     <color name="colorPrimaryDarkPlayer">#0EAD94</color>

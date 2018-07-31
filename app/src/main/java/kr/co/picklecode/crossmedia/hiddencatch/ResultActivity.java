@@ -194,7 +194,7 @@ public class ResultActivity extends BaseActivity {
 
     // TODO - Topper Animation above AnimUtil Statement
     private void showNormalAnimation(){
-        AnimUtil.playSequential(AnimUtil.Anim.FADE_IN, 600, 200,
+        AnimUtil.playSequential(AnimUtil.Anim.FADE_IN, 1500, 500, 170,
                 this.progress_view_01,
                 this.progress_sp_1,
                 this.progress_view_02,
@@ -276,5 +276,10 @@ public class ResultActivity extends BaseActivity {
         setContentView(R.layout.activity_result);
 
         init();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

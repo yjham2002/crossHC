@@ -78,21 +78,19 @@
             android:layout_marginTop="50dp"
             android:id="@+id/btn_play"
             android:text="PLAY"
-            android:src="@drawable/btn_play"
+            android:src="@drawable/button_main_play_bg"
             android:layout_gravity="center"
             android:textColor="@color/black"
             android:clickable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_height="60dp" />
         <ImageView
             android:id="@+id/btn_cha"
             android:text="CHALLENGE"
-            android:src="@drawable/btn_challenge"
+            android:src="@drawable/button_main_ch_bg"
             android:layout_gravity="center"
             android:clickable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="60dp" />

@@ -26,6 +26,8 @@ import kr.co.picklecode.crossmedia.hiddencatch.util.StageSynchronizer;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
 
 public class StageGridAdapter extends BaseAdapter {
+
+    public int selectedNum = -1;
     private HashMap<String, Integer> winInfo;
     private Context context;
     private List<StageBox> list = new Vector<>();
@@ -67,16 +69,24 @@ public class StageGridAdapter extends BaseAdapter {
             hostview.stageId = arg1.findViewById(R.id.stageId);
             hostview.level = arg1.findViewById(R.id.level);
             hostview.clearImg = arg1.findViewById(R.id.clearImg);
+            hostview.bgView = arg1.findViewById(R.id.bgView);
 
             arg1.setTag(hostview);
         } else {
             hostview = (HostView) arg1.getTag();
         }
 
+        if(arg0 == selectedNum){
+            hostview.bgView.setBackground(context.getResources().getDrawable(R.drawable.rounded_rect_thin_gray_no_border_light));
+        }else{
+            hostview.bgView.setBackground(context.getResources().getDrawable(R.drawable.rounded_rect_thin_gray_no_border));
+        }
+
         if(winInfo.containsKey(StageUtil.genKeyForWinInfo(stageBox.getId()))){
             final int count = winInfo.get(StageUtil.genKeyForWinInfo(stageBox.getId()));
 
             if(count > 0){
+                hostview.clearImg.setVisibility(View.VISIBLE);
                 hostview.stageId.setVisibility(View.INVISIBLE);
                 if(stageBox.getOriginalPath() != null && !stageBox.getOriginalPath().trim().equals("")){
                     final File dir = new File(Environment.getExternalStorageDirectory() + File.separator + Configs.DOWNLOAD_DIR + File.separator + stageBox.makePath());
@@ -89,6 +99,8 @@ public class StageGridAdapter extends BaseAdapter {
                             .transform(new RoundedTransform(10, 0))
                             .into(hostview.clearImg);
                 }
+            }else{
+                hostview.stageId.setVisibility(View.VISIBLE);
             }
 
             if(count == 0){
@@ -102,6 +114,7 @@ public class StageGridAdapter extends BaseAdapter {
                 hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_3_s));
             }
         }else{
+            hostview.stageId.setVisibility(View.VISIBLE);
             hostview.clearImg.setVisibility(View.INVISIBLE);
             hostview.level.setImageDrawable(context.getResources().getDrawable(R.drawable.img_star_0_s));
         }
@@ -118,6 +131,7 @@ public class StageGridAdapter extends BaseAdapter {
     }
 
     private class HostView {
+        View bgView;
         ImageView level, clearImg;
         TextView stageId;
     }

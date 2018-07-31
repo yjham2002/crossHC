@@ -17,7 +17,6 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/levelText"
-            android:layout_marginTop="20dp"
             android:textSize="50dp"
             android:textColor="@color/white"
             android:text="LEVEL 0"

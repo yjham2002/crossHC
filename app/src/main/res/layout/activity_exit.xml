@@ -53,10 +53,9 @@
                 android:layout_height="50dp">
                 <TextView
                     android:textSize="17dp"
-                    android:layout_margin="10dp"
                     android:text="REVIEW"
                     android:clickable="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/button_gray_bg"
                     android:id="@+id/confirmE"
                     android:gravity="center"
                     android:textColor="@color/white"
@@ -69,10 +68,9 @@
                     android:layout_width="1dp" />
                 <TextView
                     android:textSize="17dp"
-                    android:layout_margin="10dp"
                     android:text="CANCEL"
                     android:clickable="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/button_gray_bg"
                     android:id="@+id/cancelE"
                     android:gravity="center"
                     android:textColor="@color/white"
@@ -85,10 +83,9 @@
                     android:layout_width="1dp" />
                 <TextView
                     android:textSize="17dp"
-                    android:layout_margin="10dp"
                     android:text="EXIT"
                     android:clickable="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/button_gray_bg"
                     android:id="@+id/exitE"
                     android:gravity="center"
                     android:textColor="@color/white"

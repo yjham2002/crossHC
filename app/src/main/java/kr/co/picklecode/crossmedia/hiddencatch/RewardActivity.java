@@ -25,9 +25,10 @@ public class RewardActivity extends BaseActivity implements RewardedVideoAdListe
 
     @Override
     public void onRewarded(RewardItem reward) {
-        StageUtil.changePoint(10);
+        StageUtil.changePoint(3);
         sendBroadcast(new Intent(Constants.INTENT_FILTER.FILTER_REFRESH));
         showToast("힌트가 지급되었습니다.");
+        finishWithTransition(R.anim.alpha_in, R.anim.alpha_out);
     }
 
     @Override

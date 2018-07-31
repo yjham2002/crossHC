@@ -132,6 +132,19 @@ public class MainActivity extends BaseActivity {
         if(isDownloadDone){
             attachListenerAndSetEnabled();
         }else{
+            startActivityForResult(new Intent(this, SyncActivity.class), Constants.REQUEST.REQUEST_DOWNLOAD_ASK);
+            overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+        }
+    }
+
+    private void goProceed(){
+        final boolean isDownloadDone = PreferenceUtil.getBoolean(Constants.PREFERENCE.GAME_IMG_DOWNLOADED, false);
+        final int recentVer = PreferenceUtil.getInt(Constants.PREFERENCE.GAME_RECENT_VER, -1);
+        PreferenceUtil.setInt(Constants.PREFERENCE.GAME_UPDATE_CHECK, recentVer);
+
+        if(isDownloadDone){
+            attachListenerAndSetEnabled();
+        }else{
             startActivityForResult(new Intent(this, DownloadActivity.class), Constants.REQUEST.REQUEST_DOWNLOAD);
             overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
         }
@@ -164,6 +177,8 @@ public class MainActivity extends BaseActivity {
                 }
                 default: break;
             }
+        }else if(requestCode == Constants.REQUEST.REQUEST_DOWNLOAD_ASK){
+            if(resultCode == Constants.RESULT.RESULT_DOWNLOAD_ACCEPTED) goProceed();
         }
     }
 

@@ -86,6 +86,8 @@ public class StageActivity extends BaseActivity {
     private void selectStage(int position){
         StageBox stageBox = StageSynchronizer.getStageInstance().get(position);
 
+        stageGridAdapter.selectedNum = position;
+
         final HashMap<String, Integer> winInfo = StageUtil.getWinningInfo();
 
         int count = 0;
@@ -119,6 +121,7 @@ public class StageActivity extends BaseActivity {
             clearLevel.setImageDrawable(getResources().getDrawable(R.drawable.img_star_3));
         }
 
+        stageGridAdapter.notifyDataSetChanged();
     }
 
     @Override

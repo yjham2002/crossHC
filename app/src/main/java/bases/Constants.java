@@ -35,11 +35,13 @@ public class Constants {
 
     public interface REQUEST{
         int REQUEST_DOWNLOAD = 1022;
+        int REQUEST_DOWNLOAD_ASK = 1029;
     }
 
     public interface RESULT{
         int RESULT_DOWNLOAD_SUCC = 1021;
         int RESULT_DOWNLOAD_FAIL = 1020;
+        int RESULT_DOWNLOAD_ACCEPTED = 1033;
     }
 
     public interface DATABASE{

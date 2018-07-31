@@ -60,6 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     private MediaPlayer mediaPlayer;
     private MediaPlayer mediaPlayerBgm;
+    protected boolean isInit = false;
 
     protected enum PlayType{
         EFFECT, BGM
@@ -70,10 +71,45 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         playSound(ids[randomPos], playType);
     }
 
+    protected void resumeSound(PlayType playType){
+        switch (playType){
+            case BGM:{
+                if(mediaPlayerBgm != null){
+                    mediaPlayerBgm.start();
+                }
+                break;
+            }
+            case EFFECT:{
+                if(mediaPlayer != null){
+                    mediaPlayer.start();
+                }
+                break;
+            }
+        }
+    }
+
+    protected void pauseSound(PlayType playType){
+        switch (playType){
+            case BGM:{
+                if(mediaPlayerBgm != null && mediaPlayerBgm.isPlaying()){
+                    mediaPlayerBgm.pause();
+                }
+                break;
+            }
+            case EFFECT:{
+                if(mediaPlayer != null && mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                }
+                break;
+            }
+        }
+    }
+
     protected void playSound(int id, PlayType playType){
         switch (playType){
             case BGM:{
                 if(!StageUtil.isBgmOn()) return;
+                isInit = true;
                 if(mediaPlayerBgm != null){
                     mediaPlayerBgm.stop();
                     mediaPlayerBgm.release();
@@ -85,6 +121,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             }
             case EFFECT:{
                 if(!StageUtil.isEffectOn()) return;
+                isInit = true;
                 if(mediaPlayer != null){
                     mediaPlayer.stop();
                     mediaPlayer.release();

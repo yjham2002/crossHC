@@ -127,4 +127,9 @@ public class PregameActivity extends BaseActivity {
 
         transit(2500);
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

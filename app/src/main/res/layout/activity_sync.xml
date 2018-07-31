@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.picklecode.crossmedia.hiddencatch.DownloadActivity">
+    <FrameLayout
+        android:background="@drawable/rounded_rect_thin_white"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="190dp">
+        <TextView
+            android:textSize="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="top|center_horizontal"
+            android:text="업데이트 있음"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="15dp"
+                android:gravity="center"
+                android:text="다운로드를 진행하시겠습니까?\n(Wi-Fi 연결 권장)"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:background="@color/transparent_gray"
+                android:layout_height="1dp"
+                android:layout_width="match_parent" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+                <TextView
+                    android:textSize="17dp"
+                    android:text="확인"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:id="@+id/confirmDD"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:textSize="17dp"
+                    android:text="종료"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:id="@+id/cancelDD"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>
