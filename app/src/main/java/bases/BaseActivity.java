@@ -42,11 +42,8 @@ import com.google.android.gms.ads.formats.NativeContentAd;
 import com.google.android.gms.ads.formats.NativeContentAdView;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 
-import java.io.File;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import kr.co.picklecode.crossmedia.hiddencatch.R;
 import kr.co.picklecode.crossmedia.hiddencatch.util.StageUtil;
@@ -74,13 +71,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void resumeSound(PlayType playType){
         switch (playType){
             case BGM:{
-                if(mediaPlayerBgm != null){
+                if(mediaPlayerBgm != null && !mediaPlayerBgm.isPlaying()){
                     mediaPlayerBgm.start();
                 }
                 break;
             }
             case EFFECT:{
-                if(mediaPlayer != null){
+                if(mediaPlayer != null && !mediaPlayer.isPlaying()){
                     mediaPlayer.start();
                 }
                 break;
@@ -182,27 +179,23 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void startAnimationWithIn(final ImageView imageView, int animId, long delay){
         imageView.setBackgroundResource(animId);
 
-        final TimerTask timerTask = new TimerTask() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 AnimationDrawable ani = (AnimationDrawable)imageView.getBackground();
                 ani.start();
             }
-        };
-        final Timer timer = new Timer(false);
-        timer.schedule(timerTask, delay);
+        }, delay);
     }
 
     protected void stopAnimationOf(final ImageView imageView, long delay){
-        final TimerTask timerTask = new TimerTask() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 AnimationDrawable ani = (AnimationDrawable)imageView.getBackground();
                 if(ani.isRunning()) ani.stop();
             }
-        };
-        final Timer timer = new Timer(false);
-        timer.schedule(timerTask, delay);
+        }, delay);
     }
 
     protected boolean canDrawOverlaysTest() {

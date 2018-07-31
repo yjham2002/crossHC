@@ -82,6 +82,18 @@ public class GameActivity extends BaseActivity {
         }
     };
 
+    private BroadcastReceiver rewardSoundReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final boolean toGo = intent.getExtras().getBoolean(Constants.INTENT_FILTER.FILTER_EXTRA_KEY_MUSIC_REWARD);
+            if(toGo) {
+                if(isInit) resumeSound(PlayType.BGM);
+            } else {
+                pauseSound(PlayType.BGM);
+            }
+        }
+    };
+
     private BroadcastReceiver rewardReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -160,13 +172,11 @@ public class GameActivity extends BaseActivity {
     @Override
     public void onPause(){
         super.onPause();
-        pauseSound(PlayType.BGM);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        if(isInit) resumeSound(PlayType.BGM);
     }
 
     private void playBgm(){
@@ -483,6 +493,7 @@ public class GameActivity extends BaseActivity {
         registerReceiver(replayReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REPLAY));
         registerReceiver(musicReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_STOP_MUSIC));
         registerReceiver(rewardReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_REFRESH));
+        registerReceiver(rewardSoundReceiver, new IntentFilter(Constants.INTENT_FILTER.FILTER_STOP_MUSIC_REWARD));
 
         initGame();
     }
@@ -508,6 +519,7 @@ public class GameActivity extends BaseActivity {
         unregisterReceiver(replayReceiver);
         unregisterReceiver(musicReceiver);
         unregisterReceiver(rewardReceiver);
+        unregisterReceiver(rewardSoundReceiver);
         stopSound(PlayType.BGM);
     }
 

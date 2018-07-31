@@ -37,6 +37,9 @@ public class RewardActivity extends BaseActivity implements RewardedVideoAdListe
 
     @Override
     public void onRewardedVideoAdClosed() {
+        Intent i = new Intent(Constants.INTENT_FILTER.FILTER_STOP_MUSIC_REWARD);
+        i.putExtra(Constants.INTENT_FILTER.FILTER_EXTRA_KEY_MUSIC_REWARD, true);
+        sendBroadcast(i);
     }
 
     @Override
@@ -86,6 +89,9 @@ public class RewardActivity extends BaseActivity implements RewardedVideoAdListe
             }
             case R.id.confirmR :{
                 if(mRewardedVideoAd.isLoaded()){
+                    Intent i = new Intent(Constants.INTENT_FILTER.FILTER_STOP_MUSIC_REWARD);
+                    i.putExtra(Constants.INTENT_FILTER.FILTER_EXTRA_KEY_MUSIC_REWARD, false);
+                    sendBroadcast(i);
                     mRewardedVideoAd.show();
                 }else{
                     showToast("잠시 후 다시 시도해주세요.");
