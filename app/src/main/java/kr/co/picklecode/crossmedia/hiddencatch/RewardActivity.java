@@ -3,6 +3,7 @@ package kr.co.picklecode.crossmedia.hiddencatch;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class RewardActivity extends BaseActivity implements RewardedVideoAdListe
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int errorCode) {
+        Log.e("RewardActivity", "Load Failed : " + errorCode);
         showToast("다음에 다시 시도해주세요.");
         finishWithTransition(R.anim.alpha_in, R.anim.alpha_out);
     }

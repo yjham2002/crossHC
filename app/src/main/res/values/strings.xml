@@ -5,7 +5,7 @@
 
     <string name="ADMOB_ID">ca-app-pub-1846833106939117~4067137440</string>
     <string name="ADMOB_BANNER_ID">ca-app-pub-1846833106939117/2562484084</string>
-    <string name="ADMOB_REWARDED_VIDEO_ID">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="ADMOB_REWARDED_VIDEO_ID">ca-app-pub-1846833106939117/7908511854</string>
     <string name="ADMOB_INTERSITITIAL_AD_ID">ca-app-pub-1846833106939117/2370912396</string>
     <string name="ADMOB_NATIVE_AD_ID">ca-app-pub-1846833106939117/4314936497</string>
 </resources>
