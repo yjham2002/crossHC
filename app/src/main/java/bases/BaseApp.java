@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
 
+import net.khirr.library.foreground.Foreground;
+
 import java.util.List;
 
 import kr.co.picklecode.crossmedia.hiddencatch.R;
@@ -23,6 +25,8 @@ public class BaseApp extends MultiDexApplication {
         Log.e("BaseApp", "onCreate");
         MobileAds.initialize(this, getResources().getString(R.string.ADMOB_ID));
         this.context = this.getApplicationContext();
+
+        Foreground.Companion.init(this);
 
         if(StageSynchronizer.isLocalDataAvailable()){
             StageSynchronizer.loadLocalStageInstance();

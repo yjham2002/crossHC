@@ -24,6 +24,8 @@ import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import net.khirr.library.foreground.Foreground;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -94,6 +96,20 @@ public class GameActivity extends BaseActivity {
         }
     };
 
+    private Foreground.Listener foregroundListener = new Foreground.Listener() {
+        @Override
+        public void foreground() {
+            Log.e("Foreground", "Go to foreground");
+            if(isInit) resumeSound(PlayType.BGM);
+        }
+
+        @Override
+        public void background() {
+            Log.e("Foreground", "Go to background");
+            pauseSound(PlayType.BGM);
+        }
+    };
+
     private BroadcastReceiver rewardReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -102,6 +118,8 @@ public class GameActivity extends BaseActivity {
     };
 
     private void initGame(){
+        Foreground.Companion.addListener(foregroundListener);
+
         this.mainWrapper = findViewById(R.id.mainWrapper);
         this.animView = findViewById(R.id.animView);
         this.hintView = findViewById(R.id.hintView);
@@ -211,7 +229,7 @@ public class GameActivity extends BaseActivity {
         hintView.animate()
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .translationX(coordX - (hintView.getWidth() / 2))
-                .translationY(coordY + (hintView.getHeight() / 2))
+                .translationY(coordY)
                 .setDuration(0);
 
         playSoundRandomWithin(PlayType.EFFECT, R.raw.eff_hint_01, R.raw.eff_hint_02, R.raw.eff_hint_03);
@@ -367,8 +385,10 @@ public class GameActivity extends BaseActivity {
             if(answered.contains(min)){ // Already answered
                 // Do nothing
             }else{
-                displayAnim(R.drawable.anim_frame_correct, screenX, screenY);
-                react(true, screenX, screenY);
+                final float answerX = vLeft + (float)(width * min.getCoordX());
+                final float answerY = vTop + (float)(height * min.getCoordY());
+                displayAnim(R.drawable.anim_frame_correct, answerX, answerY);
+                react(true, answerX, answerY);
                 answered.add(min);
             }
         }else{ // On Failure

@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content" />
             <View
                 android:background="@color/colorPrimary"
-                android:layout_height="5dp" android:layout_width="match_parent" />
+                android:layout_height="2dp" android:layout_width="match_parent" />
             <kr.co.picklecode.crossmedia.hiddencatch.view.TouchableImageView
                 android:id="@+id/imgQues"
                 android:scaleType="fitXY"
