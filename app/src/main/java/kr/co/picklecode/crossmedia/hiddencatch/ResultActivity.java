@@ -34,6 +34,8 @@ public class ResultActivity extends BaseActivity {
     private View reward_center, reward_bottom, btn_exit, btn_replay, btn_next;
     private TextView reward_text, reward_text_bottom, rt_hint, rt_heart, chText;
 
+    private boolean semaphore = false;
+
     @Override
     public void onClick(View v){
         playSound(R.raw.eff_touch, PlayType.EFFECT);
@@ -47,12 +49,14 @@ public class ResultActivity extends BaseActivity {
                 break;
             }
             case R.id.r_replay : {
+                if(semaphore) break;
+                semaphore = true;
                 if(ResultActivity.this.resultBox.isChallenge()){
                     StageUtil.setContinuous(0);
-
                     loadInterstitialAdForProcess(new SimpleCallback() {
                         @Override
                         public void callback() {
+                            semaphore = false;
                             final List<StageBox> list = StageSynchronizer.getStageInstance();
 
                             if(list == null || list.size() == 0){
@@ -67,6 +71,7 @@ public class ResultActivity extends BaseActivity {
                     loadInterstitialAdForProcess(new SimpleCallback() {
                         @Override
                         public void callback() {
+                            semaphore = false;
                             ResultActivity.this.resultBox.setReplay(true);
                             StageUtil.sendAndFinishWithTransition(ResultActivity.this, ResultActivity.this.resultBox, PregameActivity.class, R.anim.alpha_in, R.anim.alpha_out, ResultActivity.this.resultBox.isChallenge());
                         }
@@ -75,14 +80,18 @@ public class ResultActivity extends BaseActivity {
                 break;
             }
             case R.id.r_next : {
+                if(semaphore) break;
+                semaphore = true;
                 if(StageUtil.getContinuous() % 2 == 0 || ResultActivity.this.resultBox.isLosed()){
                     loadInterstitialAdForProcess(new SimpleCallback() {
                         @Override
                         public void callback() {
+                            semaphore = false;
                             nextStage();
                         }
                     }, 5000);
                 }else{
+                    semaphore = false;
                     nextStage();
                 }
 

@@ -108,10 +108,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 if(!StageUtil.isBgmOn()) return;
                 isInit = true;
                 if(mediaPlayerBgm != null){
-                    mediaPlayerBgm.stop();
                     mediaPlayerBgm.release();
                 }
                 mediaPlayerBgm = MediaPlayer.create(this, id);
+//                mediaPlayerBgm.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                    @Override
+//                    public void onCompletion(MediaPlayer mediaPlayer) {
+//                        if(mediaPlayer != null){
+//                            mediaPlayer.stop();
+//                            mediaPlayer.release();
+//                        }
+//                    }
+//                });
                 mediaPlayerBgm.setLooping(true);
                 mediaPlayerBgm.start();
                 break;
@@ -120,10 +128,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 if(!StageUtil.isEffectOn()) return;
                 isInit = true;
                 if(mediaPlayer != null){
-                    mediaPlayer.stop();
                     mediaPlayer.release();
                 }
                 mediaPlayer = MediaPlayer.create(this, id);
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        if(mediaPlayer != null){
+                            mediaPlayer.stop();
+                            mediaPlayer.release();
+                        }
+                    }
+                });
                 mediaPlayer.setLooping(false);
                 mediaPlayer.start();
                 break;
@@ -135,7 +151,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         switch (playType){
             case BGM:{
                 if(mediaPlayerBgm != null){
-                    mediaPlayerBgm.stop();
                     mediaPlayerBgm.release();
                     mediaPlayerBgm = null;
                 }
@@ -143,7 +158,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             }
             case EFFECT:{
                 if(mediaPlayer != null){
-                    mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
@@ -272,6 +286,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     @Override
     protected void onDestroy() {
+        stopSound(PlayType.BGM);
+        stopSound(PlayType.EFFECT);
         super.onDestroy();
         unregisterReceiver(affinityExitReceiver);
     }

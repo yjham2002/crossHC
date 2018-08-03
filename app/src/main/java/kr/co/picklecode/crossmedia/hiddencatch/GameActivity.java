@@ -541,6 +541,19 @@ public class GameActivity extends BaseActivity {
         unregisterReceiver(rewardReceiver);
         unregisterReceiver(rewardSoundReceiver);
         stopSound(PlayType.BGM);
+        stopSound(PlayType.EFFECT);
+        this.animView.setImageDrawable(null);
+        this.imgOrigin.setImageDrawable(null);
+        this.imgQues.setImageDrawable(null);
+        releaseImageView(this.animView, this.imgQues, this.imgOrigin);
+        System.gc();
+    }
+
+    private void releaseImageView(ImageView... views){
+        for(ImageView v : views){
+            v.setImageDrawable(null);
+            v.setBackground(null);
+        }
     }
 
     @Override

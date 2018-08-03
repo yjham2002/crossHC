@@ -84,6 +84,13 @@ public class MainActivity extends BaseActivity {
         this.btn_eff.setChecked(StageUtil.isEffectOn());
     }
 
+    private boolean semaphore = false;
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
+
     @Override
     public void onClick(View view){
         playSound(R.raw.eff_touch, PlayType.EFFECT);
@@ -101,9 +108,12 @@ public class MainActivity extends BaseActivity {
                 break;
             }
             case R.id.btn_cha:{
+                if(semaphore) break;
+                semaphore = true;
                 loadInterstitialAdForProcess(new SimpleCallback() {
                     @Override
                     public void callback() {
+                        semaphore = false;
                         final List<StageBox> list = StageSynchronizer.getStageInstance();
 
                         if(list == null || list.size() == 0){
